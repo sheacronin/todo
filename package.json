@@ -1,0 +1,23 @@
+{
+  "name": "todo",
+  "version": "1.0.0",
+  "description": "Project created by Shea Cronin as part of [The Odin Project](https://www.theodinproject.com/courses/javascript/lessons/todo-list) curriculum.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sheacronin/todo.git"
+  },
+  "author": "Shea Cronin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sheacronin/todo/issues"
+  },
+  "homepage": "https://github.com/sheacronin/todo#readme",
+  "devDependencies": {
+    "webpack": "^5.24.2",
+    "webpack-cli": "^4.5.0"
+  }
+}
