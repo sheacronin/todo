@@ -1,1 +1,4 @@
-console.log('Hi there.');
+import {cleanRoom} from './tasks';
+import {addNewTask} from './dom-tasks';
+
+addNewTask(cleanRoom);

@@ -3,3 +3,10 @@ body {
     margin: 0 auto;
     text-align: center;
 }
+
+.task {
+    background-color: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
