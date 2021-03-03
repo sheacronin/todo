@@ -1,5 +1,8 @@
+// Module purpose: Manage tasks in the DOM.
+// Store tasks container div in a vairable.
 const tasksContainer = document.querySelector('#tasks-container');
 
+// Fn to add a new task to the DOM.
 function addNewTask(task) {
     // Create task element and add class.
     const taskEl = document.createElement('div');
@@ -15,5 +18,9 @@ function addNewTask(task) {
     // Append task el to container.
     tasksContainer.appendChild(taskEl);
 }
+
+// Button to add new task.
+const newTaskBtn = document.querySelector('#new-task-btn');
+newTaskBtn.addEventListener('click', showTaskForm);
 
 export {addNewTask};
