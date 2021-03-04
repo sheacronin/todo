@@ -19,15 +19,23 @@ function displayTask(task) {
     title.textContent = task.title;
     taskEl.appendChild(title);
     // Add click listener to display tasks details.
-    taskEl.addEventListener('click', displayTaskDetails);
+    taskEl.addEventListener('click', () => displayTaskDetails(task));
     // Append task element to container.
     tasksContainer.appendChild(taskEl);
 }
 
-function displayTaskDetails() {
-    console.log('you clicked me.');
+function displayTaskDetails(task) {
+    // Create div element and add class.
     const detailsEl = document.createElement('div');
     detailsEl.classList.add('task-details');
+    // Add task title.
+    const title = document.createElement('h2');
+    title.textContent = task.title;
+    detailsEl.appendChild(title);
+    // Add task description.
+    const desc = document.createElement('p');
+    desc.textContent = task.desc;
+    detailsEl.appendChild(desc);
     // Append details element to container.
     tasksContainer.appendChild(detailsEl);
 }
