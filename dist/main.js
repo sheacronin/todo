@@ -26,7 +26,17 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _tasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tasks */ \"./src/tasks.js\");\n/* harmony import */ var _dom_tasks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dom-tasks */ \"./src/dom-tasks.js\");\n\n\n\n(0,_dom_tasks__WEBPACK_IMPORTED_MODULE_1__.addNewTask)(_tasks__WEBPACK_IMPORTED_MODULE_0__.cleanRoom);\n\n\n//# sourceURL=webpack://todo/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _tasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tasks */ \"./src/tasks.js\");\n/* harmony import */ var _dom_tasks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dom-tasks */ \"./src/dom-tasks.js\");\n/* harmony import */ var _task_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./task-form */ \"./src/task-form.js\");\n\n\n\n\n(0,_dom_tasks__WEBPACK_IMPORTED_MODULE_1__.addNewTask)(_tasks__WEBPACK_IMPORTED_MODULE_0__.cleanRoom);\n\n\n//# sourceURL=webpack://todo/./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/task-form.js":
+/*!**************************!*\
+  !*** ./src/task-form.js ***!
+  \**************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"taskForm\": () => (/* binding */ taskForm)\n/* harmony export */ });\n// import {Task} from './tasks';\n\n// Make form an object?\nconst taskForm = {\n    // Set form element and visibility as props.\n    formEl: document.querySelector('.task-form'),\n    isHidden: true,\n    // Set form inputs as properties.\n    titleInput: document.querySelector('#title'),\n    descInput: document.querySelector('#description'),\n    dueDateInput: document.querySelector('#due-date'),\n    priorityInput: document.querySelector('#priority'),\n    submitBtn: document.querySelector('#submit-form-btn'),\n    // Button to display form.\n    displayBtn: document.querySelector('#display-form-btn'),\n    // Method to toggle display.\n    toggleDisplay() {\n        if (this.isHidden) {\n            this.formEl.classList.remove('hidden');\n        } else {\n            this.formEl.classList.add('hidden');\n        }\n        // Update isHidden boolean to reflect change.\n        this.isHidden = !this.isHidden;\n    }\n    // Method to create new task obj.\n    // Should this go in tasks module instead?\n    // createNewTask() {\n    //     return new Task(this.titleInput, this.descInput, this.dueDateInput, this.priorityInput);\n    // }\n}\n\ntaskForm.displayBtn.addEventListener('click', () => taskForm.toggleDisplay());\n\n\n\n//# sourceURL=webpack://todo/./src/task-form.js?");
 
 /***/ }),
 

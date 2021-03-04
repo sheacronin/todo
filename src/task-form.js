@@ -1,23 +1,35 @@
-// Task form - make its own module??
-function showTaskForm() {
-    const taskForm = document.querySelector('.task-form');
-    taskForm.classList.remove('hidden');
+// import {Task} from './tasks';
+
+// Make form an object?
+const taskForm = {
+    // Set form element and visibility as props.
+    formEl: document.querySelector('.task-form'),
+    isHidden: true,
+    // Set form inputs as properties.
+    titleInput: document.querySelector('#title'),
+    descInput: document.querySelector('#description'),
+    dueDateInput: document.querySelector('#due-date'),
+    priorityInput: document.querySelector('#priority'),
+    submitBtn: document.querySelector('#submit-form-btn'),
+    // Button to display form.
+    displayBtn: document.querySelector('#display-form-btn'),
+    // Method to toggle display.
+    toggleDisplay() {
+        if (this.isHidden) {
+            this.formEl.classList.remove('hidden');
+        } else {
+            this.formEl.classList.add('hidden');
+        }
+        // Update isHidden boolean to reflect change.
+        this.isHidden = !this.isHidden;
+    }
+    // Method to create new task obj.
+    // Should this go in tasks module instead?
+    // createNewTask() {
+    //     return new Task(this.titleInput, this.descInput, this.dueDateInput, this.priorityInput);
+    // }
 }
 
-// Button to add new task.
-const showFormBtn = document.querySelector('#show-form-btn');
-showFormBtn.addEventListener('click', showTaskForm);
+taskForm.displayBtn.addEventListener('click', () => taskForm.toggleDisplay());
 
-// Form task creation.
-const taskForm = document.querySelector('.task-form');
-
-function createNewTaskWithForm() {
-    const nameInput = document.querySelector('#name');
-    const descInput = document.querySelector('#description');
-    const dueDateInput = document.querySelector('#due-date');
-    const priorityInput = document.querySelector('#priority-input');
-
-    return new Task(nameInput, descInput, dueDateInput, priorityInput);
-}
-
-const submitFormBtn = document.querySelector('#submit-form-btn');
+export {taskForm};
