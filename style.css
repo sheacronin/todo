@@ -19,6 +19,10 @@ header {
     align-items: center;
 }
 
+#tasks-container {
+    margin-bottom: 100px;
+}
+
 .task {
     display: flex;
     justify-content: left;
@@ -33,12 +37,18 @@ header {
     box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.4);
 }
 
-#task-form {
+.task-form {
     display: grid;
     background-color: lightgoldenrodyellow;
     height: 50vh;
     width: 100vw;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    bottom: 20vh;
+}
+
+.hidden {
+    display: none;
 }
 
 .form-item {
@@ -58,7 +68,7 @@ footer {
     align-items: center;
 }
 
-#new-task-btn {
+#show-form-btn {
     position: relative;
     bottom: 100%;
     border: none;
