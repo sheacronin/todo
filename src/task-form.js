@@ -1,4 +1,4 @@
-// import {Task} from './tasks';
+import {Task} from './tasks';
 
 // Make form an object?
 const taskForm = {
@@ -22,14 +22,18 @@ const taskForm = {
         }
         // Update isHidden boolean to reflect change.
         this.isHidden = !this.isHidden;
-    }
+    },
     // Method to create new task obj.
-    // Should this go in tasks module instead?
-    // createNewTask() {
-    //     return new Task(this.titleInput, this.descInput, this.dueDateInput, this.priorityInput);
-    // }
+    // Should this go in tasks module instead? / emit event instead
+    createNewTask() {
+        const task = new Task(this.titleInput.value, this.descInput.value,
+                             this.dueDateInput.value, this.priorityInput.value);
+        console.log(task);
+        return task;
+    }
 }
 
 taskForm.displayBtn.addEventListener('click', () => taskForm.toggleDisplay());
+taskForm.submitBtn.addEventListener('click', () => taskForm.createNewTask());
 
 export {taskForm};

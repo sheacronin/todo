@@ -13,4 +13,4 @@ class Task {
 
 const cleanRoom = new Task('Clean room', 'I need to clean my room', 'tomorrow', 2);
 
-export {cleanRoom};
+export {cleanRoom, Task};
