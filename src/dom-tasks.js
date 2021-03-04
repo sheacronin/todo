@@ -19,8 +19,4 @@ function addNewTask(task) {
     tasksContainer.appendChild(taskEl);
 }
 
-// Button to add new task.
-const newTaskBtn = document.querySelector('#new-task-btn');
-newTaskBtn.addEventListener('click', showTaskForm);
-
 export {addNewTask};

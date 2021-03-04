@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <form id="task-form" style="display: none;">
+    <form class="task-form hidden" onsubmit="return false">
         <h2>Add a new task.</h2>
         <div class="form-item">
             <label for="title">Title:</label>
@@ -64,12 +64,12 @@
         </div>
 
         <div>
-            <button id="submit-btn">Submit</button>
+            <button id="submit-form-btn">Submit</button>
         </div>
     </form>
 
     <footer>
-        <button id="new-task-btn">+</button>
+        <button id="show-form-btn">+</button>
     </footer>
 
     <script src="main.js"></script>
