@@ -30,11 +30,22 @@ header {
     border-bottom: 1px black solid;
 }
 
+/* Checkbox */
 .task input {
     margin: 0 20px;
     width: 20px;
     height: 20px;
     box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.4);
+}
+
+.task-details {
+    position: absolute;
+    /* Appear directly below header */
+    top: 8vh;
+    background-color: white;
+    width: 100vw;
+    /* Full screen minus header & footer */
+    height: 84vh;
 }
 
 .task-form {
@@ -58,7 +69,7 @@ header {
 }
 
 footer {
-    position: sticky;
+    position: fixed;
     width: 100vw;
     bottom: 0;
     background-color: #779cab;

@@ -18,8 +18,18 @@ function displayTask(task) {
     const title = document.createElement('p');
     title.textContent = task.title;
     taskEl.appendChild(title);
-    // Append task el to container.
+    // Add click listener to display tasks details.
+    taskEl.addEventListener('click', displayTaskDetails);
+    // Append task element to container.
     tasksContainer.appendChild(taskEl);
+}
+
+function displayTaskDetails() {
+    console.log('you clicked me.');
+    const detailsEl = document.createElement('div');
+    detailsEl.classList.add('task-details');
+    // Append details element to container.
+    tasksContainer.appendChild(detailsEl);
 }
 
 // Listen for event from tasks.js
