@@ -41,5 +41,6 @@ const taskForm = {
 
 taskForm.displayBtn.addEventListener('click', () => taskForm.toggleDisplay());
 taskForm.submitBtn.addEventListener('click', () => taskForm.submit());
+taskForm.submitBtn.addEventListener('click', () => taskForm.toggleDisplay());
 
 export {taskForm};

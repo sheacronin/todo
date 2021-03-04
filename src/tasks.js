@@ -15,11 +15,13 @@ class Task {
 
 const cleanRoom = new Task('Clean room', 'I need to clean my room', 'tomorrow', 2);
 
+// Fn to create a new task and emit an event.
 function createTask(args) {
     const task = new Task(...args);
-    console.log(task);
+    events.emit('taskCreated', task);
 }
 
+// When task-form.js submits form:
 events.on('formSubmitted', createTask);
 
 export {cleanRoom, Task};
