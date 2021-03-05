@@ -15,6 +15,8 @@ function displayTask(task) {
     checkbox.setAttribute('type', 'checkbox');
     // Add event listener to checkbox to toggle completion in tasks.js.
     checkbox.addEventListener('click', () => events.emit('checkboxClicked', task));
+    // Add event listener to add style class when task is toggled complete.
+    checkbox.addEventListener('click', toggleCompleteStyles);
     taskEl.appendChild(checkbox);
     // Create and append p element with task title.
     const title = document.createElement('p');
@@ -46,6 +48,15 @@ function displayTaskDetails(task) {
     detailsEl.appendChild(desc);
     // Append details element to container.
     tasksContainer.appendChild(detailsEl);
+}
+
+function toggleCompleteStyles(e) {
+    // Store task div in variable.
+    const task = e.target.parentNode;
+    // Decide if complete class needs to be removed or added.
+    const action = task.classList.contains('complete') ? 'remove' : 'add';
+    // Remove/add the class.
+    task.classList[action]('complete');
 }
 
 // Listen for event from tasks.js
