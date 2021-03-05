@@ -10,6 +10,16 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/dom-projects.js":
+/*!*****************************!*\
+  !*** ./src/dom-projects.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"header\": () => (/* binding */ header)\n/* harmony export */ });\n/* harmony import */ var _projects__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./projects */ \"./src/projects.js\");\n\n\n// Store header & footer in variables.\nconst header = document.querySelector('header');\nconst footer = document.querySelector('footer');\n\n// Root variable to access CSS variable for proj color.\nconst root = document.documentElement;\n// Set header to display project name.\nheader.textContent = _projects__WEBPACK_IMPORTED_MODULE_0__.defaultProject.name;\n// Set header & footer styles to use project color.\nroot.style.setProperty('--proj-color', _projects__WEBPACK_IMPORTED_MODULE_0__.defaultProject.color);\n\n\n\n//# sourceURL=webpack://todo/./src/dom-projects.js?");
+
+/***/ }),
+
 /***/ "./src/dom-tasks.js":
 /*!**************************!*\
   !*** ./src/dom-tasks.js ***!
@@ -36,7 +46,17 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _tasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tasks */ \"./src/tasks.js\");\n/* harmony import */ var _dom_tasks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dom-tasks */ \"./src/dom-tasks.js\");\n/* harmony import */ var _task_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./task-form */ \"./src/task-form.js\");\n\n\n\n\n\n(0,_dom_tasks__WEBPACK_IMPORTED_MODULE_1__.displayTask)(_tasks__WEBPACK_IMPORTED_MODULE_0__.cleanRoom);\n\n\n//# sourceURL=webpack://todo/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _tasks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tasks */ \"./src/tasks.js\");\n/* harmony import */ var _dom_tasks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dom-tasks */ \"./src/dom-tasks.js\");\n/* harmony import */ var _task_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./task-form */ \"./src/task-form.js\");\n/* harmony import */ var _projects__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./projects */ \"./src/projects.js\");\n/* harmony import */ var _dom_projects__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./dom-projects */ \"./src/dom-projects.js\");\n\n\n\n\n\n\n// Store all projects in an array.\nconst allProjects = [_projects__WEBPACK_IMPORTED_MODULE_3__.defaultProject];\n\n(0,_dom_tasks__WEBPACK_IMPORTED_MODULE_1__.displayTask)(_tasks__WEBPACK_IMPORTED_MODULE_0__.cleanRoom);\n\n//# sourceURL=webpack://todo/./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/projects.js":
+/*!*************************!*\
+  !*** ./src/projects.js ***!
+  \*************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"defaultProject\": () => (/* binding */ defaultProject)\n/* harmony export */ });\nclass Project {\n    constructor(name, color) {\n        this.name = name;\n        this.color = color;\n        // Project.tasks stores an array with task objs.\n        this.tasks = [];\n    }\n}\n\nconst defaultProject = new Project('default', 'green');\n\n\n\n//# sourceURL=webpack://todo/./src/projects.js?");
 
 /***/ }),
 

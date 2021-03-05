@@ -7,4 +7,6 @@ class Project {
     }
 }
 
-const defaultProject = new Project('default', 'grey');
+const defaultProject = new Project('default', 'green');
+
+export {defaultProject};

@@ -1,3 +1,7 @@
+:root {
+    --proj-color: #779cab;
+}
+
 body {
     font-size: 24px;
     margin: 0 auto;
@@ -8,7 +12,7 @@ body {
 }
 
 header {
-    background-color: #779cab;
+    background-color: var(--proj-color);
     color: white;
     position: sticky;
     top: 0;
@@ -37,7 +41,7 @@ header {
     width: 20px;
     height: 20px;
     justify-self: center;
-    box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.4);
+    box-shadow: -1px 1px 5px var(--proj-color);
 }
 
 .complete {
@@ -79,7 +83,7 @@ footer {
     position: fixed;
     width: 100vw;
     bottom: 0;
-    background-color: #779cab;
+    background-color: var(--proj-color);
     height: 8vh;
     display: flex;
     justify-content: center;
