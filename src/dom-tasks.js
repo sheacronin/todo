@@ -17,9 +17,9 @@ function displayTask(task) {
     // Create and append p element with task title.
     const title = document.createElement('p');
     title.textContent = task.title;
-    taskEl.appendChild(title);
     // Add click listener to display tasks details.
-    taskEl.addEventListener('click', () => displayTaskDetails(task));
+    title.addEventListener('click', () => displayTaskDetails(task));
+    taskEl.appendChild(title);
     // Append task element to container.
     tasksContainer.appendChild(taskEl);
 }
