@@ -32,6 +32,12 @@ function displayTaskDetails(task) {
     const title = document.createElement('h2');
     title.textContent = task.title;
     detailsEl.appendChild(title);
+    // Add button to hide details.
+    const backBtn = document.createElement('button');
+    backBtn.textContent = 'Go back';
+    // When button is clicked, remove details div.
+    backBtn.addEventListener('click', () => tasksContainer.removeChild(detailsEl));
+    detailsEl.appendChild(backBtn);
     // Add task description.
     const desc = document.createElement('p');
     desc.textContent = task.desc;
