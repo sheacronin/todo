@@ -11,4 +11,10 @@ header.textContent = defaultProject.name;
 // Set header & footer styles to use project color.
 root.style.setProperty('--proj-color', defaultProject.color);
 
+function showProjectsList() {
+    console.log('showing projects list');
+}
+// Add event listener to footer to show projects list.
+footer.addEventListener('click', showProjectsList);
+
 export {header};

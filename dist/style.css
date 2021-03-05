@@ -88,11 +88,12 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+    color: white;
 }
 
 #display-form-btn {
-    position: relative;
-    bottom: 100%;
+    position: absolute;
+    bottom: 9vh;
     border: none;
     font-size: 30px;
     height: 50px;
