@@ -24,17 +24,19 @@ header {
 }
 
 .task {
-    display: flex;
-    justify-content: left;
+    display: grid;
     align-items: center;
+    justify-content: stretch;
+    justify-items: left;
+    grid-template-columns: 15% auto;
     border-bottom: 1px black solid;
 }
 
 /* Checkbox */
 .task input {
-    margin: 0 20px;
     width: 20px;
     height: 20px;
+    justify-self: center;
     box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.4);
 }
 
