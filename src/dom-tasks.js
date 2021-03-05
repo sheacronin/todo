@@ -13,6 +13,8 @@ function displayTask(task) {
     // Create and append checkbox to div element.
     const checkbox = document.createElement('input');
     checkbox.setAttribute('type', 'checkbox');
+    // Add event listener to checkbox to toggle completion in tasks.js.
+    checkbox.addEventListener('click', () => events.emit('checkboxClicked', task));
     taskEl.appendChild(checkbox);
     // Create and append p element with task title.
     const title = document.createElement('p');
