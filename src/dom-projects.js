@@ -1,4 +1,5 @@
 import {defaultProject} from './projects';
+import {toggleClass} from './index';
 
 // Store header & footer in variables.
 const header = document.querySelector('header');
@@ -11,10 +12,10 @@ header.textContent = defaultProject.name;
 // Set header & footer styles to use project color.
 root.style.setProperty('--proj-color', defaultProject.color);
 
-function showProjectsList() {
-    console.log('showing projects list');
-}
+// Store projects list el in variable.
+const projectsList = document.querySelector('#projects-list');
+
 // Add event listener to footer to show projects list.
-footer.addEventListener('click', showProjectsList);
+footer.addEventListener('click', () => toggleClass(projectsList, 'hidden'));
 
 export {header};

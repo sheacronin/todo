@@ -79,6 +79,14 @@ header {
     display: grid;
 }
 
+#projects-list {
+    background-color: cadetblue;
+    position: absolute;
+    top: 8vh;
+    height: 84vh;
+    width: 100vw;
+}
+
 footer {
     position: fixed;
     width: 100vw;
