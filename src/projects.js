@@ -9,4 +9,7 @@ class Project {
 
 const defaultProject = new Project('default', 'green');
 
+// Store all projects in an array.
+const allProjects = [defaultProject];
+
 export {defaultProject};

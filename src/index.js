@@ -4,9 +4,6 @@ import {taskForm} from './task-form';
 import {defaultProject} from './projects';
 import {header} from './dom-projects';
 
-// Store all projects in an array.
-const allProjects = [defaultProject];
-
 // Helper fn.
 function toggleClass(el, cls) {
     // Decide if complete class needs to be removed or added.

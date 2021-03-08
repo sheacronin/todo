@@ -42,6 +42,20 @@
     </form>
 
     <div id="projects-list" class="hidden">
+        <form id="project-form" onsubmit="return false">
+            <h2>Add a new project.</h2>
+            <div class="form-item">
+                <label for="project-name">Project Name:</label>
+                <input type="text" name="project-name" id="project-name">
+            </div>
+            <div class="form-item">
+                <label for="project-color">Color:</label>
+                <input type="color" id="project-color" name="project-color"></input>
+            </div>
+            <div>
+                <button id="submit-form-btn">Submit</button>
+            </div>
+        </form>
         <button id="display-proj-form-btn">New Project</button>
     </div>
 
