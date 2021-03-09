@@ -46,7 +46,7 @@
 
     <!-- Div to contain a list of all projects. Initially hidden. -->
     <div id="projects-list" class="hidden">
-        <form id="project-form" onsubmit="return false">
+        <form id="project-form" class="hidden" onsubmit="return false">
             <h2>Add a new project.</h2>
             <div class="form-item">
                 <label for="project-name">Project Name:</label>
@@ -64,13 +64,13 @@
 
     <!-- Footer to contain buttons to add/switch tasks and projects. -->
     <footer>
-        <button id="switch-proj" class="footer-btns">Switch project</button>
+        <button id="switch-proj" class="footer-btns">Switch Project</button>
         <div id="disp-form-btns-container">
             <!-- Button to display form to create new task. -->
-            <button id="disp-task-form-btn" class="footer-btns">Add task</button>
+            <button id="disp-task-form-btn" class="footer-btns">New Task</button>
             <!-- Button to display form to create new project. -->
             <!-- Initially hidden. Appears when projects list is displayed. -->
-            <button id="disp-proj-form-btn" class="footer-btns hidden">New Project</button>
+            <button id="disp-project-form-btn" class="footer-btns hidden">New Project</button>
         </div>
     </footer>
 
