@@ -1,6 +1,6 @@
 import {defaultProject} from './projects';
 import {toggleClass} from './index';
-import { events } from './events';
+import {events} from './events';
 
 // Store header in variable.
 const header = document.querySelector('header');
@@ -16,12 +16,11 @@ root.style.setProperty('--proj-color', defaultProject.color);
 const projectsList = document.querySelector('#projects-list');
 
 // Add stored projects to list.
-// Code here...
 function displayProject(project) {
     // Create project element and add class.
     const el = document.createElement('div');
     el.classList.add('project');
-    el.style.backgroundColor = project.color;
+    el.style.backgroundColor = project.color + '80';
     el.textContent = project.name;
     // Append project element to container.
     projectsList.appendChild(el);
@@ -36,4 +35,4 @@ switchProjBtn.addEventListener('click', () => toggleClass(projectsList, 'hidden'
 // Emit event to tell forms that projects list is active/no longer active.
 switchProjBtn.addEventListener('click', () => events.emit('projectsToggled'));
 
-export {header};
+export {displayProject};

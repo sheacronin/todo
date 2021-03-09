@@ -1,8 +1,8 @@
 import {Task, cleanRoom} from './tasks';
 import {displayTask} from './dom-tasks';
 import {taskForm} from './forms';
-import {defaultProject} from './projects';
-import {header} from './dom-projects';
+import {allProjects} from './projects';
+import {displayProject} from './dom-projects';
 
 // Helper fn.
 function toggleClass(el, cls) {
@@ -13,5 +13,10 @@ function toggleClass(el, cls) {
 }
 
 displayTask(cleanRoom);
+
+// Display all projects on page load.
+allProjects.forEach(project => displayProject(project));
+// // Display all tasks in current project on page load.
+// defaultProject.tasks.forEach(task => displayTask);
 
 export {toggleClass};
