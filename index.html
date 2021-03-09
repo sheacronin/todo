@@ -60,13 +60,18 @@
                 <button id="submit-project-btn">Submit</button>
             </div>
         </form>
-        <button id="disp-proj-form-btn">New Project</button>
     </div>
 
     <!-- Footer to contain buttons to add/switch tasks and projects. -->
     <footer>
         <button id="switch-proj" class="footer-btns">Switch project</button>
-        <button id="disp-task-form-btn" class="footer-btns">Add task</button>
+        <div id="disp-form-btns-container">
+            <!-- Button to display form to create new task. -->
+            <button id="disp-task-form-btn" class="footer-btns">Add task</button>
+            <!-- Button to display form to create new project. -->
+            <!-- Initially hidden. Appears when projects list is displayed. -->
+            <button id="disp-proj-form-btn" class="footer-btns hidden">New Project</button>
+        </div>
     </footer>
 
     <script src="main.js"></script>

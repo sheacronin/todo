@@ -109,3 +109,8 @@ footer {
     margin: 0;
     box-shadow: inset 0 -5px 4px rgba(0, 0, 0, 0.3);
 }
+
+#disp-form-btns-container button {
+    width: 100%;
+    height: 100%;
+}
