@@ -3,19 +3,19 @@ import {events} from './events';
 // Make form an object?
 const taskForm = {
     // Set form element and visibility as props.
-    formEl: document.querySelector('.task-form'),
+    formEl: document.querySelector('#task-form'),
     isHidden: true,
     // Set form inputs as inner obj properties.
     inputs: {
-        title: document.querySelector('#title'),
+        name: document.querySelector('#task-name'),
         desc: document.querySelector('#description'),
         dueDate: document.querySelector('#due-date'),
         priority: document.querySelector('#priority')
     },
     // Form submit button.
-    submitBtn: document.querySelector('#submit-form-btn'),
+    submitBtn: document.querySelector('#submit-task-btn'),
     // Button to display form.
-    displayBtn: document.querySelector('#display-form-btn'),
+    displayBtn: document.querySelector('#disp-task-form-btn'),
     // Method to toggle display.
     toggleDisplay() {
         if (this.isHidden) {
