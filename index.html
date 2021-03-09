@@ -7,17 +7,20 @@
     <link rel="stylesheet" type="text/css" href="style.css" >
 </head>
 <body>
+    <!-- Header: will display project name. -->
     <header>
         <h1>Todo List</h1>
     </header>
 
+    <!-- Div to contain all tasks of the current project. -->
     <div id="tasks-container"></div>
 
-    <form class="task-form hidden" onsubmit="return false">
+    <!-- Form to add a new task. Inititally hidden. -->
+    <form id="task-form" class="hidden" onsubmit="return false">
         <h2>Add a new task.</h2>
         <div class="form-item">
-            <label for="title">Title:</label>
-            <input type="text" name="title" id="title">
+            <label for="task-name">Task Name:</label>
+            <input type="text" name="task-name" id="task-name">
         </div>
 
         <div class="form-item">
@@ -37,10 +40,11 @@
         </div>
 
         <div>
-            <button id="submit-form-btn">Submit</button>
+            <button id="submit-task-btn">Submit</button>
         </div>
     </form>
 
+    <!-- Div to contain a list of all projects. Initially hidden. -->
     <div id="projects-list" class="hidden">
         <form id="project-form" onsubmit="return false">
             <h2>Add a new project.</h2>
@@ -53,15 +57,16 @@
                 <input type="color" id="project-color" name="project-color"></input>
             </div>
             <div>
-                <button id="submit-form-btn">Submit</button>
+                <button id="submit-project-btn">Submit</button>
             </div>
         </form>
-        <button id="display-proj-form-btn">New Project</button>
+        <button id="disp-proj-form-btn">New Project</button>
     </div>
 
+    <!-- Footer to contain buttons to add/switch tasks and projects. -->
     <footer>
         <button id="switch-proj" class="footer-btns">Switch project</button>
-        <button id="display-form-btn" class="footer-btns">Add task</button>
+        <button id="disp-task-form-btn" class="footer-btns">Add task</button>
     </footer>
 
     <script src="main.js"></script>

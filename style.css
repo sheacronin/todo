@@ -60,7 +60,7 @@ header {
     height: 84vh;
 }
 
-.task-form {
+form {
     display: grid;
     background-color: lightgoldenrodyellow;
     height: 50vh;
