@@ -3,9 +3,9 @@ import {toggleClass} from './index';
 
 class Form {
     constructor(type) {
-        this.type = type;
+        this.type = type,
         // Store the form element as a property.
-        this.element = document.querySelector(`#${type}-form`),
+        this.el = document.querySelector(`#${type}-form`),
         // Store an array of form's inputs, including textarea.
         this.inputs = Array.from(document.querySelectorAll(`#${type}-form input, textarea`)),
         this.submitBtn = document.querySelector(`#submit-${type}-btn`),
@@ -17,8 +17,6 @@ class Form {
         events.emit(`${this.type}FormSubmitted`, inputValues);
     }
 }
-
-const taskForm = new Form('task');
 
 // Old code of object's inputs:
 //     // Set form inputs as inner obj properties.
@@ -40,10 +38,29 @@ const taskForm = new Form('task');
 //         events.emit('formSubmitted', inputValues);
 //     }
 
-// Toggle if form is hidden when display/submit button is clicked.
-taskForm.displayBtn.addEventListener('click', () => toggleClass(taskForm.element, 'hidden'));
-taskForm.submitBtn.addEventListener('click', () => toggleClass(taskForm.element, 'hidden'));
-// Run submit method when submit button is clicked.
-taskForm.submitBtn.addEventListener('click', () => taskForm.submit());
+// Create objects of both forms.
+const taskForm = new Form('task');
+const projectForm = new Form ('project');
+// Store both forms in an array.
+const forms = [taskForm, projectForm];
+
+// Switches the two form display buttons.
+function switchActiveForm() {
+    forms.forEach(form => {
+        toggleClass(form.displayBtn, 'hidden');
+    });
+}
+// Function runs when dom-projects emits event that projects list is active.
+events.on('projectsToggled', switchActiveForm);
+
+// Add event listeners to each form's buttons.
+forms.forEach(form => {
+    // Toggle if form is hidden when display/submit button is clicked.
+    form.displayBtn.addEventListener('click', () => toggleClass(form.el, 'hidden'));
+    form.submitBtn.addEventListener('click', () => toggleClass(form.el, 'hidden'));
+    // Run submit method when submit button is clicked.
+    form.submitBtn.addEventListener('click', () => form.submit());
+});
 
 export {taskForm};
+export {Form};

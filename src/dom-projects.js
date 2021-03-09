@@ -1,15 +1,14 @@
 import {defaultProject} from './projects';
 import {toggleClass} from './index';
+import { events } from './events';
 
-// Store header & footer in variables.
+// Store header in variable.
 const header = document.querySelector('header');
-const footer = document.querySelector('footer');
-const switchProjEl = document.querySelector('#switch-proj')
+// Set header to display project name.
+header.textContent = defaultProject.name;
 
 // Root variable to access CSS variable for proj color.
 const root = document.documentElement;
-// Set header to display project name.
-header.textContent = defaultProject.name;
 // Set header & footer styles to use project color.
 root.style.setProperty('--proj-color', defaultProject.color);
 
@@ -17,11 +16,13 @@ root.style.setProperty('--proj-color', defaultProject.color);
 const projectsList = document.querySelector('#projects-list');
 
 // Add stored projects to list.
+// Code here...
 
-// Add display task form btn? New module for project form?
-// projectsList.appendChild();
-
-// Add event listener to footer to show projects list.
-switchProjEl.addEventListener('click', () => toggleClass(projectsList, 'hidden'));
+// Store button to toggle projects list display.
+const switchProjBtn = document.querySelector('#switch-proj');
+// Add event listener to button to show projects list.
+switchProjBtn.addEventListener('click', () => toggleClass(projectsList, 'hidden'));
+// Emit event to tell forms that projects list is active/no longer active.
+switchProjBtn.addEventListener('click', () => events.emit('projectsToggled'));
 
 export {header};
