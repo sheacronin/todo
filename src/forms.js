@@ -7,7 +7,7 @@ class Form {
         // Store the form element as a property.
         this.el = document.querySelector(`#${type}-form`),
         // Store an array of form's inputs, including textarea.
-        this.inputs = Array.from(document.querySelectorAll(`#${type}-form input, textarea`)),
+        this.inputs = Array.from(document.querySelectorAll(`#${type}-form input, #${type}-form textarea`)),
         this.submitBtn = document.querySelector(`#submit-${type}-btn`),
         this.displayBtn = document.querySelector(`#disp-${type}-form-btn`)
     }

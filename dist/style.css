@@ -81,11 +81,19 @@ form {
 }
 
 #projects-list {
-    background-color: cadetblue;
+    background-color: #e6edef;
     position: absolute;
     top: 8vh;
     height: 84vh;
     width: 100vw;
+}
+
+.project {
+    height: 8vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    letter-spacing: 1px;
 }
 
 footer {

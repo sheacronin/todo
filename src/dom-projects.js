@@ -17,6 +17,17 @@ const projectsList = document.querySelector('#projects-list');
 
 // Add stored projects to list.
 // Code here...
+function displayProject(project) {
+    // Create project element and add class.
+    const el = document.createElement('div');
+    el.classList.add('project');
+    el.style.backgroundColor = project.color;
+    el.textContent = project.name;
+    // Append project element to container.
+    projectsList.appendChild(el);
+}
+// Listen for event from projects.js
+events.on('projectCreated', displayProject);
 
 // Store button to toggle projects list display.
 const switchProjBtn = document.querySelector('#switch-proj');
