@@ -22,7 +22,7 @@ function createTask(args) {
 }
 
 // When task-form.js submits form:
-events.on('formSubmitted', createTask);
+events.on('taskFormSubmitted', createTask);
 // When user clicks checkbox, toggle task complete.
 events.on('checkboxClicked', (task) => task.toggleComplete());
 

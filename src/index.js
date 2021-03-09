@@ -1,6 +1,6 @@
 import {Task, cleanRoom} from './tasks';
 import {displayTask} from './dom-tasks';
-import {taskForm} from './task-form';
+import {taskForm} from './forms';
 import {defaultProject} from './projects';
 import {header} from './dom-projects';
 
