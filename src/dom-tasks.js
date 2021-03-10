@@ -28,6 +28,19 @@ function displayTask(task) {
     tasksContainer.appendChild(taskEl);
 }
 
+// Listen for event from tasks.js and dom-projects.js
+events.on('taskCreated', displayTask);
+
+function removeAllTasks() {
+    // While the container has a child, remove a child.
+    while (tasksContainer.firstChild) {
+        tasksContainer.removeChild(tasksContainer.lastChild);
+    }
+}
+
+// Listen for event from dom-projects.js
+events.on('projectSwitched', removeAllTasks);
+
 function displayTaskDetails(task) {
     // Create div element and add class.
     const detailsEl = document.createElement('div');
@@ -49,8 +62,5 @@ function displayTaskDetails(task) {
     // Append details element to container.
     tasksContainer.appendChild(detailsEl);
 }
-
-// Listen for event from tasks.js
-events.on('taskCreated', displayTask);
 
 export {displayTask};

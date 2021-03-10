@@ -2,18 +2,31 @@ import {defaultProject} from './projects';
 import {toggleClass} from './index';
 import {events} from './events';
 
-// Store header in variable.
-const header = document.querySelector('header');
-// Set header to display project name.
-header.textContent = defaultProject.name;
+function updateStyles(project) {
+    // Store header in variable.
+    const header = document.querySelector('header');
+    // Set header to display project name.
+    header.textContent = project.name;
 
-// Root variable to access CSS variable for proj color.
-const root = document.documentElement;
-// Set header & footer styles to use project color.
-root.style.setProperty('--proj-color', defaultProject.color);
+    // Root variable to access CSS variable for proj color.
+    const root = document.documentElement;
+    // Set header & footer styles to use project color.
+    root.style.setProperty('--proj-color', project.color);
+}
 
 // Store projects list el in variable.
 const projectsList = document.querySelector('#projects-list');
+
+// Fn to switch active project.
+function updateTasks(project) {
+    console.log('Switching project...');
+    // Emit event for dom-tasks to remove all current tasks.
+    events.emit('projectSwitched');
+    // Emit events for dom-tasks to add each task.
+    project.tasks.forEach(task => {
+        events.emit('taskCreated', task);
+    });
+}
 
 // Add stored projects to list.
 function displayProject(project) {
@@ -22,6 +35,13 @@ function displayProject(project) {
     el.classList.add('project');
     el.style.backgroundColor = project.color + '80';
     el.textContent = project.name;
+    
+    // Add event listener to switch project styles & tasks.
+    el.addEventListener('click', () => updateStyles(project));
+    el.addEventListener('click', () => updateTasks(project));
+    // Anoter event listener to hide projects list after a project is clicked.
+    el.addEventListener('click', () => toggleClass(projectsList, 'hidden'));
+
     // Append project element to container.
     projectsList.appendChild(el);
 }
