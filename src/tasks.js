@@ -13,10 +13,6 @@ class Task {
     }
 }
 
-// Temp test tasks.
-const cleanRoom = new Task('Clean room', 'I need to clean my room', 'tomorrow', 2);
-const editColors = new Task('Edit Colors', 'Change the color to blue', '3 days', 1);
-
 // Fn to create a new task and emit an event.
 function createTask(args) {
     const task = new Task(...args);
@@ -30,4 +26,4 @@ events.on('taskFormSubmitted', createTask);
 // When user clicks checkbox, toggle task complete.
 events.on('checkboxClicked', (task) => task.toggleComplete());
 
-export {cleanRoom, editColors, Task};
+export {Task, createTask};

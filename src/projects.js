@@ -1,37 +1,37 @@
 import {events} from './events';
 import {cleanRoom, editColors} from './tasks';
+import {updateLocalStorage} from './index';
 
 class Project {
     constructor(name, color, tasks) {
         this.name = name;
         this.color = color;
         // Project.tasks stores an array with task objs.
-        this.tasks = tasks;
+        this.tasks = tasks || [];
+    }
+    // Fn to run when a new task is created.
+    addTask(task) {
+        this.tasks.push(task);
     }
 }
 
-// Create default project obj to store all tasks.
-const defaultProject = new Project('All Tasks', '#779cab', [cleanRoom]);
+// // Create default project obj to store all tasks.
+// const defaultProject = new Project('All Tasks', '#779cab', [cleanRoom]);
 
 // Store all projects in an array.
-const allProjects = [defaultProject];
+const allProjects = [];
 
-// // Local storage stuff:
-// // Function to update projects in local storage.
-// function updateLocalStorage() {
-//     localStorage.setItem('allprojects', JSON.stringify(allProjects)); // Convert array & objects to string.
-// }
-// // Check if projects exist in local storage.
-// // !! Move this to index.js?
-// if (localStorage.getItem('allprojects')) {
-//     // Update page with user's projects
-//     const storedProjects = JSON.parse(localStorage.getItem('allprojects')); // Parse to un-stringify array.
-//     storedProjects.forEach(project => {
-//         // Reconstruct project objects.
-//         project = new Project(project.name, project.color);
-//         allProjects.push(project);
-//     });
-// }
+// Variable to store project user displays.
+let activeProject = allProjects[0];
+// Fn to switch active project.
+function assignActiveProject(project) {
+    console.log('assigning active project...')
+    activeProject = project;
+}
+// Change active project when dom-projects emits event.
+events.on('projectSwitched', assignActiveProject);
+// Event listener to add new tasks to active project.
+events.on('taskCreated', (task) => activeProject.addTask(task));
 
 // Fn to create a new project and emit an event.
 function createProject(args) {
@@ -40,16 +40,11 @@ function createProject(args) {
     allProjects.push(project);
     // Emit event so dom-projects.js displays project.
     events.emit('projectCreated', project);
-    console.log(allProjects);
 
-    // updateLocalStorage();
+    updateLocalStorage();
 }
 
 // When form.js submits projects form:
 events.on('projectFormSubmitted', createProject);
 
-// Add another test project.
-createProject(['Todo App', '#FFE66D', [editColors]]);
-
-export {defaultProject};
-export {allProjects};
+export {Project, createProject, allProjects};
