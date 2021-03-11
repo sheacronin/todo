@@ -17,14 +17,9 @@ function updateStyles(project) {
 // Function to update styles and emit events to update tasks.
 function switchProject(project) {
     updateStyles(project);
-    // Emit event for dom-tasks to remove all current tasks.
+    // Emit event for dom-tasks to remove all current tasks,
+    // then display the new project's tasks.
     events.emit('projectSwitched', project);
-    // Emit events for dom-tasks to add each task.
-    if (project.tasks) {
-        project.tasks.forEach(task => {
-            events.emit('taskCreated', task);
-        });
-    }
 }
 // After a project is created, switch to that project.
 events.on('projectCreated', switchProject);

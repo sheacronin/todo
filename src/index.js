@@ -29,8 +29,6 @@ function updateLocalStorage() {
 //     });
 // }
 
-console.log(allProjects)
-
 // Display all projects on page load.
 allProjects.forEach(project => addProjectToList(project));
 // Display all tasks in current project on page load.
@@ -46,7 +44,7 @@ createProject(['Chores', '#009946']);
 createProject(['To Do App', '#983454']);
 
 // Temp test tasks.
-createTask(['Clean room', 'I need to clean my room', 'tomorrow', 2]);
+createTask(['Clean Room', 'I need to clean my room', 'tomorrow', 2]);
 createTask(['Edit Colors', 'Change the color to blue', '3 days', 1]);
 
 export {toggleClass, updateLocalStorage};

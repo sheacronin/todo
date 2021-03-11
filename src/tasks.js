@@ -1,8 +1,8 @@
 import {events} from './events';
 
 class Task {
-    constructor(title, desc, dueDate, priority) {
-        this.title = title;
+    constructor(name, desc, dueDate, priority) {
+        this.name = name;
         this.desc = desc;
         this.dueDate = dueDate;
         this.priority = priority;
@@ -16,6 +16,7 @@ class Task {
 // Fn to create a new task and emit an event.
 function createTask(args) {
     const task = new Task(...args);
+    console.log(`created task ${task.name}`);
     // Push new task into active project.
     // ...Code here...
     events.emit('taskCreated', task);

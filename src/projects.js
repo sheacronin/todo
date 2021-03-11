@@ -25,7 +25,7 @@ const allProjects = [];
 let activeProject = allProjects[0];
 // Fn to switch active project.
 function assignActiveProject(project) {
-    console.log('assigning active project...')
+    console.log(`assigning ${project.name} as active project...`);
     activeProject = project;
 }
 // Change active project when dom-projects emits event.
