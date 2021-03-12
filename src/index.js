@@ -40,10 +40,11 @@ function updateLocalStorage() {
 // This project's "tasks" array will store every other project obj.
 const masterProject = createProject(['All Tasks', '#779cab']);
 
+const code = new Task('Code');
 
 // Temp test projects.
+createProject(['To Do App', '#983454', [code]]);
 createProject(['Chores', '#009946']);
-createProject(['To Do App', '#983454']);
 
 // Temp test tasks.
 createTask(['Clean Room', 'I need to clean my room', 'tomorrow', 2]);

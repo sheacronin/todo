@@ -17,8 +17,6 @@ class Task {
 function createTask(args) {
     const task = new Task(...args);
     console.log(`created task ${task.name}`);
-    // Push new task into active project.
-    // ...Code here...
     events.emit('taskCreated', task);
 }
 

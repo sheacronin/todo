@@ -11,20 +11,26 @@ function displayTask(task) {
     // Create task element and add class.
     const taskEl = document.createElement('div');
     taskEl.classList.add('task');
+
     // Create and append checkbox to div element.
     const checkbox = document.createElement('input');
     checkbox.setAttribute('type', 'checkbox');
     // Add event listener to checkbox to toggle completion in tasks.js.
     checkbox.addEventListener('click', () => events.emit('checkboxClicked', task));
     // Add event listener to add style class when task is toggled complete.
-    checkbox.addEventListener('click', (e) => toggleClass(e.target.parentNode, 'complete'));
+    checkbox.addEventListener('click', () => toggleClass(taskEl, 'complete'));
     taskEl.appendChild(checkbox);
+
     // Create and append p element with task name.
     const name = document.createElement('p');
     name.textContent = task.name;
     // Add click listener to display tasks details.
     name.addEventListener('click', () => displayTaskDetails(task));
     taskEl.appendChild(name);
+
+    // Check if task is complete and add complete styles if so.
+    if (task.isComplete) toggleClass(taskEl, 'complete');
+
     // Append task element to container.
     tasksContainer.appendChild(taskEl);
 }
