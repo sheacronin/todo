@@ -1,8 +1,8 @@
 import {Task, createTask} from './tasks';
 import {displayTask} from './dom-tasks';
 import {taskForm} from './forms';
-import {Project, createProject, allProjects} from './projects';
 import {addProjectToList} from './dom-projects';
+import {Project, createProject} from './projects';
 
 // Helper fn.
 function toggleClass(el, cls) {
@@ -15,7 +15,7 @@ function toggleClass(el, cls) {
 // Local storage stuff:
 // Function to update projects in local storage.
 function updateLocalStorage() {
-    console.log('would update local storage.')
+    console.log('would update local storage.');
     // localStorage.setItem('allprojects', JSON.stringify(allProjects)); // Convert array & objects to string.
 }
 // // Check if projects exist in local storage.
@@ -30,13 +30,15 @@ function updateLocalStorage() {
 // }
 
 // Display all projects on page load.
-allProjects.forEach(project => addProjectToList(project));
+// masterProject.tasks.forEach(project => addProjectToList(project));
 // Display all tasks in current project on page load.
 // defaultProject.tasks.forEach(task => displayTask(task));
 
 
 
-
+// Create default project obj to store all tasks.
+// This project's "tasks" array will store every other project obj.
+const masterProject = createProject(['All Tasks', '#779cab']);
 
 
 // Temp test projects.
@@ -47,4 +49,4 @@ createProject(['To Do App', '#983454']);
 createTask(['Clean Room', 'I need to clean my room', 'tomorrow', 2]);
 createTask(['Edit Colors', 'Change the color to blue', '3 days', 1]);
 
-export {toggleClass, updateLocalStorage};
+export {toggleClass, updateLocalStorage, masterProject};

@@ -1,6 +1,6 @@
 import {events} from './events';
 import {cleanRoom, editColors} from './tasks';
-import {updateLocalStorage} from './index';
+import {updateLocalStorage, masterProject} from './index';
 
 class Project {
     constructor(name, color, tasks) {
@@ -15,14 +15,8 @@ class Project {
     }
 }
 
-// // Create default project obj to store all tasks.
-// const defaultProject = new Project('All Tasks', '#779cab', [cleanRoom]);
-
-// Store all projects in an array.
-const allProjects = [];
-
 // Variable to store project user displays.
-let activeProject = allProjects[0];
+let activeProject;
 // Fn to switch active project.
 function assignActiveProject(project) {
     console.log(`assigning ${project.name} as active project...`);
@@ -35,16 +29,20 @@ events.on('taskCreated', (task) => activeProject.addTask(task));
 
 // Fn to create a new project and emit an event.
 function createProject(args) {
+    console.log(`Creating project ${args[0]}...`);
     const project = new Project(...args);
-    // Add new project to all projects array.
-    allProjects.push(project);
+    if (project.name !== 'All Tasks') { // If not Master Project
+        // Add new project to all projects array.
+        masterProject.tasks.push(project);
+    }
     // Emit event so dom-projects.js displays project.
     events.emit('projectCreated', project);
 
     updateLocalStorage();
+    return project;
 }
 
 // When form.js submits projects form:
 events.on('projectFormSubmitted', createProject);
 
-export {Project, createProject, allProjects};
+export {Project, createProject};

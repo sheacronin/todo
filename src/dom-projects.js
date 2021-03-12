@@ -29,6 +29,7 @@ const projectsList = document.querySelector('#projects-list');
 
 // Add stored projects to list.
 function addProjectToList(project) {
+    console.log(`Adding ${project.name} to list...`);
     // Create project element and add class.
     const el = document.createElement('div');
     el.classList.add('project');

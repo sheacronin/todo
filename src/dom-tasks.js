@@ -44,7 +44,13 @@ events.on('projectSwitched', removeAllTasks);
 
 // Display new project's tasks.
 function displayAllTasks(project) {
-    project.tasks.forEach(task => displayTask(task));
+    if (project.name === 'All Tasks') { // If Master Project
+        project.tasks.forEach(project => {
+            project.tasks.forEach(task => displayTask(task));
+        });
+    } else { // If normal project.
+        project.tasks.forEach(task => displayTask(task));
+    }
 }
 events.on('projectSwitched', displayAllTasks);
 
