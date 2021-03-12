@@ -33,8 +33,12 @@ if (localStorage.getItem('allprojects')) {
     // Update page with user's projects
     const storedProjects = JSON.parse(localStorage.getItem('allprojects')); // Parse to un-stringify array.
     storedProjects.forEach(project => {
+        // Reconstruct task objects into new array.
+        const tasks = project.tasks.map(
+            task => new Task(task.name, task.desc, task.dueDate, task.priority, task.isComplete)
+        );
         // Reconstruct project objects.
-        project = new Project(project.name, project.color, project.tasks);
+        project = new Project(project.name, project.color, tasks);
         masterProject.tasks.push(project);
     });
 }

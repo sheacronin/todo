@@ -2,15 +2,16 @@ import { updateLocalStorage } from '.';
 import {events} from './events';
 
 class Task {
-    constructor(name, desc, dueDate, priority) {
+    constructor(name, desc, dueDate, priority, isComplete) {
         this.name = name;
         this.desc = desc;
         this.dueDate = dueDate;
         this.priority = priority;
-        this.isComplete = false;
+        this.isComplete = isComplete || false;
     }
     toggleComplete() {
         this.isComplete = !this.isComplete;
+        events.emit('taskUpdated');
     }
 }
 
