@@ -12,11 +12,14 @@ class Project {
     // Fn to run when a new task is created.
     addTask(task) {
         this.tasks.push(task);
+        console.log(masterProject);
+        events.emit('projectUpdated');
     }
     // Fn to run when task is deleted.
     removeTask(task) {
         const i = this.tasks.indexOf(task);
         this.tasks.splice(i, 1);
+        events.emit('projectUpdated');
     }
 }
 
@@ -45,7 +48,6 @@ function createProject(args) {
     // Emit event so dom-projects.js displays project.
     events.emit('projectCreated', project);
 
-    updateLocalStorage();
     return project;
 }
 

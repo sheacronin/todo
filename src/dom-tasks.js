@@ -78,7 +78,7 @@ function displayTaskDetails(task, taskEl) {
     detailsEl.appendChild(backBtn);
 
     // Add delete button.
-    const addDeleteBtn = (() => {
+    (function addDeleteBtn() {
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = 'Delete';
         // When button is clicked...

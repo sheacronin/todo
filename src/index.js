@@ -1,8 +1,9 @@
 import {Task, createTask} from './tasks';
-import {displayTask} from './dom-tasks';
+import {displayTask, displayAllTasks} from './dom-tasks';
 import {taskForm} from './forms';
 import {addProjectToList} from './dom-projects';
 import {Project, createProject} from './projects';
+import { events } from './events';
 
 // Helper fn.
 function toggleClass(el, cls) {
@@ -12,42 +13,35 @@ function toggleClass(el, cls) {
     el.classList[action](cls);
 }
 
-// Local storage stuff:
-// Function to update projects in local storage.
-function updateLocalStorage() {
-    console.log('would update local storage.');
-    // localStorage.setItem('allprojects', JSON.stringify(allProjects)); // Convert array & objects to string.
-}
-// // Check if projects exist in local storage.
-// if (localStorage.getItem('allprojects')) {
-//     // Update page with user's projects
-//     const storedProjects = JSON.parse(localStorage.getItem('allprojects')); // Parse to un-stringify array.
-//     storedProjects.forEach(project => {
-//         // Reconstruct project objects.
-//         project = new Project(project.name, project.color);
-//         allProjects.push(project);
-//     });
-// }
-
-// Display all projects on page load.
-// masterProject.tasks.forEach(project => addProjectToList(project));
-// Display all tasks in current project on page load.
-// defaultProject.tasks.forEach(task => displayTask(task));
-
-
-
 // Create default project obj to store all tasks.
 // This project's "tasks" array will store every other project obj.
 const masterProject = createProject(['All Tasks', '#779cab']);
+console.log(masterProject.tasks);
 
-const code = new Task('Code');
+// Local storage stuff:
+// Function to update projects in local storage.
+function updateLocalStorage() {
+    console.log('Local storage updating...');
+    localStorage.setItem('allprojects', JSON.stringify(masterProject.tasks)); // Convert array & objects to string.
+}
+// Event listeners for when to update local storage.
+events.on('projectCreated', updateLocalStorage);
+events.on('projectUpdated', updateLocalStorage);
+events.on('taskUpdated', updateLocalStorage);
+// Check if projects exist in local storage.
+if (localStorage.getItem('allprojects')) {
+    // Update page with user's projects
+    const storedProjects = JSON.parse(localStorage.getItem('allprojects')); // Parse to un-stringify array.
+    storedProjects.forEach(project => {
+        // Reconstruct project objects.
+        project = new Project(project.name, project.color, project.tasks);
+        masterProject.tasks.push(project);
+    });
+}
 
-// Temp test projects.
-createProject(['To Do App', '#983454', [code]]);
-createProject(['Chores', '#009946']);
+// Display all projects in list on page load.
+masterProject.tasks.forEach(project => addProjectToList(project));
+// Switch to master project on page load.
+events.emit('projectSwitched', masterProject);
 
-// Temp test tasks.
-createTask(['Clean Room', 'I need to clean my room', 'tomorrow', 2]);
-createTask(['Edit Colors', 'Change the color to blue', '3 days', 1]);
-
-export {toggleClass, updateLocalStorage, masterProject};
+export {toggleClass, masterProject, updateLocalStorage};

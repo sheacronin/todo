@@ -1,3 +1,4 @@
+import { updateLocalStorage } from '.';
 import {events} from './events';
 
 class Task {
