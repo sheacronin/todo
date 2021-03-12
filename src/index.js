@@ -15,7 +15,7 @@ function toggleClass(el, cls) {
 
 // Create default project obj to store all tasks.
 // This project's "tasks" array will store every other project obj.
-const masterProject = createProject(['All Tasks', '#779cab']);
+const masterProject = createProject(['All Tasks', '#73a9bf']);
 console.log(masterProject.tasks);
 
 // Local storage stuff:
