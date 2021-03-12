@@ -1,14 +1,14 @@
 :root {
-    --proj-color: #779cab;
+    --proj-color: #73a9bf;
 }
 
 body {
     font-size: 24px;
     margin: 0 auto;
     text-align: center;
-    background-color: #e6edef;
+    background-color: #F1F6F9;
     color: #080b0d;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Rubik', sans-serif;
 }
 
 header {
@@ -22,6 +22,8 @@ header {
     justify-content: center;
     align-items: center;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+    font-size: 30px;
+    font-weight: 600;
 }
 
 #tasks-container {
@@ -62,15 +64,21 @@ header {
     position: absolute;
     /* Appear directly below header */
     top: 8vh;
-    background-color: white;
+    background-color: #F1F6F9;
     width: 100vw;
     /* Full screen minus header & footer */
     height: 84vh;
 }
 
+.hidden {
+    display: none;
+}
+
 form {
     display: grid;
-    background-color: lightgoldenrodyellow;
+    grid-template-rows: 80px auto;
+    align-items: center;
+    background-color: #B9D4DF;
     height: 50vh;
     width: 100vw;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
@@ -78,18 +86,46 @@ form {
     bottom: 8vh;
 }
 
-.hidden {
-    display: none;
+.form-title {
+    margin: 0;
+    font-size: 26px;
 }
 
 .form-item {
     text-align: left;
     margin: 0 20px;
     display: grid;
+    font-size: 20px;
+}
+
+input {
+    height: 30px;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Rubik', sans-serif;
+    font-size: 20px;
+}
+
+textarea {
+    height: 50px;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Rubik', sans-serif;
+    font-size: 20px;
+}
+
+.submit-btn {
+    font-family: 'Rubik', sans-serif;
+    font-size: 20px;
+    border-radius: 10px;
+    border: none;
+    padding: 5px;
+    background-color: #40768c;
+    color: white;
 }
 
 #projects-list {
-    background-color: #e6edef;
+    background-color: #F1F6F9;
     position: absolute;
     top: 8vh;
     height: 84vh;
@@ -124,6 +160,7 @@ footer {
     padding: 0;
     margin: 0;
     box-shadow: inset 0 -5px 4px rgba(0, 0, 0, 0.3);
+    font-family: 'Rubik', sans-serif;
 }
 
 #disp-form-btns-container button {

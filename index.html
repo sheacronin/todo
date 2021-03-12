@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
     <link rel="stylesheet" type="text/css" href="style.css" >
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Header: will display project name. -->
@@ -16,8 +19,8 @@
     <div id="tasks-container"></div>
 
     <!-- Form to add a new task. Inititally hidden. -->
-    <form id="task-form" class="hidden" onsubmit="return false">
-        <h2>Add a new task.</h2>
+    <form id="task-form" class="hidden" onsubmit="return false" autocomplete="off">
+        <h2 class="form-title">Add a new task.</h2>
         <div class="form-item">
             <label for="task-name">Task Name:</label>
             <input type="text" name="task-name" id="task-name">
@@ -40,14 +43,14 @@
         </div>
 
         <div>
-            <button id="submit-task-btn">Submit</button>
+            <button id="submit-task-btn" class="submit-btn">Submit</button>
         </div>
     </form>
 
     <!-- Div to contain a list of all projects. Initially hidden. -->
     <div id="projects-list" class="hidden">
-        <form id="project-form" class="hidden" onsubmit="return false">
-            <h2>Add a new project.</h2>
+        <form id="project-form" class="hidden" onsubmit="return false" autocomplete="off">
+            <h2 class="form-title">Add a new project.</h2>
             <div class="form-item">
                 <label for="project-name">Project Name:</label>
                 <input type="text" name="project-name" id="project-name">
@@ -57,7 +60,7 @@
                 <input type="color" id="project-color" name="project-color"></input>
             </div>
             <div>
-                <button id="submit-project-btn">Submit</button>
+                <button id="submit-project-btn" class="submit-btn">Submit</button>
             </div>
         </form>
     </div>
