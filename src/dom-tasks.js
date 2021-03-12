@@ -6,7 +6,7 @@ import {toggleClass} from './index';
 const tasksContainer = document.querySelector('#tasks-container');
 
 // Fn to add a new task to the DOM.
-function displayTask(task) {
+function displayTask(task, color) {
     console.log(`displaying task ${task.name}`);
     // Create task element and add class.
     const taskEl = document.createElement('div');
@@ -19,6 +19,10 @@ function displayTask(task) {
     checkbox.addEventListener('click', () => events.emit('checkboxClicked', task));
     // Add event listener to add style class when task is toggled complete.
     checkbox.addEventListener('click', () => toggleClass(taskEl, 'complete'));
+    // Style checkbox with proj color if displaying All Tasks.
+    if (color) {
+        checkbox.style.boxShadow = '-1px 1px 5px ' + color;
+    }
     taskEl.appendChild(checkbox);
 
     // Create and append p element with task name.
@@ -52,7 +56,7 @@ events.on('projectSwitched', removeAllTasks);
 function displayAllTasks(project) {
     if (project.name === 'All Tasks') { // If Master Project
         project.tasks.forEach(project => {
-            project.tasks.forEach(task => displayTask(task));
+            project.tasks.forEach(task => displayTask(task, project.color));
         });
     } else { // If normal project.
         project.tasks.forEach(task => displayTask(task));
