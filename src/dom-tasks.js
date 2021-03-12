@@ -25,7 +25,7 @@ function displayTask(task) {
     const name = document.createElement('p');
     name.textContent = task.name;
     // Add click listener to display tasks details.
-    name.addEventListener('click', () => displayTaskDetails(task));
+    name.addEventListener('click', () => displayTaskDetails(task, taskEl));
     taskEl.appendChild(name);
 
     // Check if task is complete and add complete styles if so.
@@ -60,24 +60,42 @@ function displayAllTasks(project) {
 }
 events.on('projectSwitched', displayAllTasks);
 
-function displayTaskDetails(task) {
+function displayTaskDetails(task, taskEl) {
     // Create div element and add class.
     const detailsEl = document.createElement('div');
     detailsEl.classList.add('task-details');
+
     // Add task name.
     const name = document.createElement('h2');
     name.textContent = task.name;
     detailsEl.appendChild(name);
+
     // Add button to hide details.
     const backBtn = document.createElement('button');
     backBtn.textContent = 'Go back';
     // When button is clicked, remove details div.
     backBtn.addEventListener('click', () => tasksContainer.removeChild(detailsEl));
     detailsEl.appendChild(backBtn);
+
+    // Add delete button.
+    const addDeleteBtn = (() => {
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete';
+        // When button is clicked...
+        // remove details div,
+        deleteBtn.addEventListener('click', () => tasksContainer.removeChild(detailsEl));
+        // remove task div,
+        deleteBtn.addEventListener('click', () => tasksContainer.removeChild(taskEl));
+        // and emit event to remove task from project.
+        deleteBtn.addEventListener('click', () => events.emit('taskDeleted', task));
+        detailsEl.appendChild(deleteBtn);
+    })();
+
     // Add task description.
     const desc = document.createElement('p');
     desc.textContent = task.desc;
     detailsEl.appendChild(desc);
+
     // Append details element to container.
     tasksContainer.appendChild(detailsEl);
 }

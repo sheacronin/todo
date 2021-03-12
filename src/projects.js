@@ -13,6 +13,11 @@ class Project {
     addTask(task) {
         this.tasks.push(task);
     }
+    // Fn to run when task is deleted.
+    removeTask(task) {
+        const i = this.tasks.indexOf(task);
+        this.tasks.splice(i, 1);
+    }
 }
 
 // Variable to store project user displays.
@@ -26,6 +31,8 @@ function assignActiveProject(project) {
 events.on('projectSwitched', assignActiveProject);
 // Event listener to add new tasks to active project.
 events.on('taskCreated', (task) => activeProject.addTask(task));
+// Event listener to remove deleted tasks from active project.
+events.on('taskDeleted', (task) => activeProject.removeTask(task));
 
 // Fn to create a new project and emit an event.
 function createProject(args) {
