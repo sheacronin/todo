@@ -1,6 +1,7 @@
 import {events} from './events';
 import {cleanRoom, editColors} from './tasks';
 import {updateLocalStorage, masterProject} from './index';
+import { taskForm } from './forms';
 
 class Project {
     constructor(name, color, tasks) {
@@ -41,9 +42,12 @@ events.on('taskDeleted', (task) => activeProject.removeTask(task));
 function createProject(args) {
     console.log(`Creating project ${args[0]}...`);
     const project = new Project(...args);
-    if (project.name !== 'All Tasks') { // If not Master Project
+    if (project.name === 'All Tasks') { // If Master Project
+        // Create an array property to store other projects.
+        project.projects = [];
+    } else { // If an other project
         // Add new project to all projects array.
-        masterProject.tasks.push(project);
+        masterProject.projects.push(project);
     }
     // Emit event so dom-projects.js displays project.
     events.emit('projectCreated', project);

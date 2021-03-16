@@ -55,12 +55,13 @@ events.on('projectSwitched', removeAllTasks);
 // Display new project's tasks.
 function displayAllTasks(project) {
     if (project.name === 'All Tasks') { // If Master Project
-        project.tasks.forEach(project => {
-            project.tasks.forEach(task => displayTask(task, project.color));
+        // Display each task from each project.
+        project.projects.forEach(childProject => {
+            childProject.tasks.forEach(task => displayTask(task, childProject.color));
         });
-    } else { // If normal project.
-        project.tasks.forEach(task => displayTask(task));
     }
+    // If normal project, and for unsorted masterProject tasks.
+    project.tasks.forEach(task => displayTask(task));
 }
 events.on('projectSwitched', displayAllTasks);
 
@@ -106,6 +107,12 @@ function displayTaskDetails(task, taskEl) {
     const desc = document.createElement('p');
     desc.textContent = task.desc;
     detailsEl.appendChild(desc);
+
+    // Add edit button
+    (function addEditBtn() {
+        const editBtn = document.createElement('button');
+        editBtn.textContent = 'Edit Task';
+    })();
 
     // Append details element to container.
     tasksContainer.appendChild(detailsEl);

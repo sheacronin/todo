@@ -14,37 +14,42 @@ function toggleClass(el, cls) {
 }
 
 // Create default project obj to store all tasks.
-// This project's "tasks" array will store every other project obj.
+// This project will have an array prop to store every other project obj.
 const masterProject = createProject(['All Tasks', '#73a9bf']);
-console.log(masterProject.tasks);
 
 // Local storage stuff:
 // Function to update projects in local storage.
 function updateLocalStorage() {
     console.log('Local storage updating...');
-    localStorage.setItem('allprojects', JSON.stringify(masterProject.tasks)); // Convert array & objects to string.
+    localStorage.setItem('masterproject', JSON.stringify(masterProject)); // Convert array & objects to string.
 }
 // Event listeners for when to update local storage.
 events.on('projectCreated', updateLocalStorage);
 events.on('projectUpdated', updateLocalStorage);
 events.on('taskUpdated', updateLocalStorage);
 // Check if projects exist in local storage.
-if (localStorage.getItem('allprojects')) {
+if (localStorage.getItem('masterproject')) {
+    const storedMasterProject = JSON.parse(localStorage.getItem('masterproject')); // Parse to un-stringify array.
+    // Add stored unsorted tasks to Master Project.
+    storedMasterProject.tasks.forEach(task => {
+        task = new Task(task.name, task.desc, task.dueDate, task.priority, task.isComplete);
+        masterProject.tasks.push(task);
+    })
     // Update page with user's projects
-    const storedProjects = JSON.parse(localStorage.getItem('allprojects')); // Parse to un-stringify array.
-    storedProjects.forEach(project => {
+    storedMasterProject.projects.forEach(project => {
         // Reconstruct task objects into new array.
         const tasks = project.tasks.map(
             task => new Task(task.name, task.desc, task.dueDate, task.priority, task.isComplete)
         );
         // Reconstruct project objects.
         project = new Project(project.name, project.color, tasks);
-        masterProject.tasks.push(project);
+        masterProject.projects.push(project);
     });
+    console.log(masterProject);
 }
 
 // Display all projects in list on page load.
-masterProject.tasks.forEach(project => addProjectToList(project));
+masterProject.projects.forEach(project => addProjectToList(project));
 // Switch to master project on page load.
 events.emit('projectSwitched', masterProject);
 
