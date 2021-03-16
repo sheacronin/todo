@@ -1,7 +1,7 @@
 import {events} from './events';
 import {cleanRoom, editColors} from './tasks';
 import {updateLocalStorage, masterProject} from './index';
-import { taskForm } from './forms';
+import { projectSelect, taskForm } from './forms';
 
 class Project {
     constructor(name, color, tasks) {
@@ -19,6 +19,7 @@ class Project {
     // Fn to run when task is deleted.
     removeTask(task) {
         const i = this.tasks.indexOf(task);
+        console.log('Removing ' + this.tasks[i].name + ' from ' + this.name);
         this.tasks.splice(i, 1);
         events.emit('projectUpdated');
     }
@@ -34,9 +35,32 @@ function assignActiveProject(project) {
 // Change active project when dom-projects emits event.
 events.on('projectSwitched', assignActiveProject);
 // Event listener to add new tasks to active project.
-events.on('taskCreated', (task) => activeProject.addTask(task));
+events.on('taskCreated', (task) => {
+    // Store the selected project.
+    const selectedProject = projectSelect.getSelected.bind(projectSelect)();
+    console.log(selectedProject);
+    selectedProject.addTask(task);
+});
+
 // Event listener to remove deleted tasks from active project.
-events.on('taskDeleted', (task) => activeProject.removeTask(task));
+events.on('taskDeleted', (task) => {
+    if (activeProject === masterProject) {
+        // If the task doesn't belong to the master project.
+        if (!masterProject.tasks.includes(task)) {
+            // Loop through all the other projects
+            // to find which project needs to remove the task.
+            for (let i = 0; i < masterProject.projects.length; i++) {
+                const project = masterProject.projects[i];
+                // Run method to remove task once it is found in project.
+                if (project.tasks.includes(task)) project.removeTask(task);
+                return;
+            }
+        }
+    }
+    // Remove task from active project once it is determined it must be
+    // the owner of the task.
+    activeProject.removeTask(task)
+});
 
 // Fn to create a new project and emit an event.
 function createProject(args) {

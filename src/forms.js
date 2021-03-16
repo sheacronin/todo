@@ -1,5 +1,5 @@
 import {events} from './events';
-import {toggleClass} from './index';
+import {masterProject, toggleClass} from './index';
 
 class Form {
     constructor(type) {
@@ -14,6 +14,7 @@ class Form {
     submit() {
         // Create an array with the input values.
         const inputValues = this.inputs.map(input => input.value);
+        // Emit event w/ args for new obj creation.
         events.emit(`${this.type}FormSubmitted`, inputValues);
     }
 }
@@ -80,6 +81,21 @@ const projectSelect = {
                 option.selected = true;
                 // Return to stop looping.
                 return;
+            }
+        }
+    },
+    getSelected() {
+        console.log(this.el.value);
+        // If master project is selected, return master project obj.
+        if (this.el.value === 'All Tasks') return masterProject;
+        // If not master project, fn continues to loop thru each project
+        // looking for a match.
+        for (let i = 0; i < masterProject.projects.length; i++) {
+            let project = masterProject.projects[i];
+            console.log(project.name + '===' + this.el.value);
+            if (this.el.value === project.name) {
+                console.log('found a match.')
+                return project;
             }
         }
     }
