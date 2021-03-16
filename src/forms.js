@@ -62,5 +62,15 @@ forms.forEach(form => {
     form.submitBtn.addEventListener('click', () => form.submit());
 });
 
-export {taskForm};
-export {Form};
+// Populate project select element.
+function addProjectOption(project) {
+    const projectSelect = document.querySelector('#project-select');
+    const option = document.createElement('option');
+    option.textContent = project.name;
+    option.setAttribute('value', project.name);
+    projectSelect.appendChild(option);
+}
+// Listen for each time project is created to add to selection element.
+events.on('projectCreated', addProjectOption);
+
+export {taskForm, addProjectOption};

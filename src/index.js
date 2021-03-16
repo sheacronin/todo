@@ -1,9 +1,9 @@
 import {Task, createTask} from './tasks';
 import {displayTask, displayAllTasks} from './dom-tasks';
-import {taskForm} from './forms';
+import {taskForm, addProjectOption} from './forms';
 import {addProjectToList} from './dom-projects';
 import {Project, createProject} from './projects';
-import { events } from './events';
+import {events} from './events';
 
 // Helper fn.
 function toggleClass(el, cls) {
@@ -43,6 +43,9 @@ if (localStorage.getItem('masterproject')) {
         );
         // Reconstruct project objects.
         project = new Project(project.name, project.color, tasks);
+        // Add project options to task form.
+        addProjectOption(project);
+        // Store in masterProject object.
         masterProject.projects.push(project);
     });
     console.log(masterProject);
