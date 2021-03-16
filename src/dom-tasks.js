@@ -95,6 +95,13 @@ function displayTaskDetails(task, taskEl) {
         detailsEl.appendChild(deleteBtn);
     })();
 
+    // Add priority info.
+    (function addPriority() {
+        const priority = document.createElement('div');
+        priority.textContent = 'Priority: ' + task.priority;
+        detailsEl.appendChild(priority);
+    })();
+
     // Add task description.
     const desc = document.createElement('p');
     desc.textContent = task.desc;
