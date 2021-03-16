@@ -1,6 +1,6 @@
 import {Task, createTask} from './tasks';
 import {displayTask, displayAllTasks} from './dom-tasks';
-import {taskForm, addProjectOption} from './forms';
+import {taskForm, projectSelect} from './forms';
 import {addProjectToList} from './dom-projects';
 import {Project, createProject} from './projects';
 import {events} from './events';
@@ -44,7 +44,7 @@ if (localStorage.getItem('masterproject')) {
         // Reconstruct project objects.
         project = new Project(project.name, project.color, tasks);
         // Add project options to task form.
-        addProjectOption(project);
+        projectSelect.addOption(project);
         // Store in masterProject object.
         masterProject.projects.push(project);
     });

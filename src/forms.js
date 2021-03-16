@@ -62,15 +62,32 @@ forms.forEach(form => {
     form.submitBtn.addEventListener('click', () => form.submit());
 });
 
-// Populate project select element.
-function addProjectOption(project) {
-    const projectSelect = document.querySelector('#project-select');
-    const option = document.createElement('option');
-    option.textContent = project.name;
-    option.setAttribute('value', project.name);
-    projectSelect.appendChild(option);
+const projectSelect = {
+    el: document.querySelector('#project-select'),
+    // Populate project select element.
+    addOption(project) {
+        const option = document.createElement('option');
+        option.textContent = project.name;
+        option.setAttribute('value', project.name);
+        this.el.appendChild(option);
+    },
+    switchSelected(project) {
+        // Loop through each option.
+        for (let i = 0; i < this.el.children.length; i++) {
+            let option = this.el.children[i];
+            if (option.value === project.name) { // If option matches current project.
+                // Select option.
+                option.selected = true;
+                // Return to stop looping.
+                return;
+            }
+        }
+    }
 }
+// Bind to projectSelect so 'this' has correct value.
 // Listen for each time project is created to add to selection element.
-events.on('projectCreated', addProjectOption);
+events.on('projectCreated', projectSelect.addOption.bind(projectSelect));
+// Listen for each time project is switched to switch selected project.
+events.on('projectSwitched', projectSelect.switchSelected.bind(projectSelect));
 
-export {taskForm, addProjectOption};
+export {taskForm, projectSelect};
