@@ -26,11 +26,20 @@ function displayTask(task, color) {
     taskEl.appendChild(checkbox);
 
     // Create and append p element with task name.
-    const name = document.createElement('p');
+    const name = document.createElement('div');
+    name.classList.add('task-card-name');
     name.textContent = task.name;
     // Add click listener to display tasks details.
     name.addEventListener('click', () => displayTaskDetails(task, taskEl));
     taskEl.appendChild(name);
+
+    // Create due date element.
+    (function addDueDate() {
+        const dueDate = document.createElement('div');
+        dueDate.classList.add('task-card-date');
+        dueDate.textContent = task._dueDate ? task.dueDate : '';
+        taskEl.appendChild(dueDate);
+    })();
 
     // Check if task is complete and add complete styles if so.
     if (task.isComplete) toggleClass(taskEl, 'complete');

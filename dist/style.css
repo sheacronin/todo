@@ -37,6 +37,7 @@ header {
     justify-content: stretch;
     grid-template-columns: 15% auto;
     border-bottom: 1px black solid;
+    position: relative;
 }
 
 /* Checkbox */
@@ -47,12 +48,20 @@ header {
     box-shadow: -1px 1px 5px var(--proj-color);
 }
 
-.task p {
+.task-card-name {
     display: flex;
     align-items: center;
     width: 100%;
     height: 100%;
     margin: 0;
+}
+
+.task-card-date {
+    font-size: 16px;
+    position: absolute;
+    top: 9px;
+    right: 9px;
+    opacity: 0.5;
 }
 
 .complete {

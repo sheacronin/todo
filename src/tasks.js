@@ -1,6 +1,6 @@
 import {events} from './events';
 import { formatRelative, subDays, addDays, format } from 'date-fns';
-import enUS from 'date-fns/locale/en-GB';
+import enUS from 'date-fns/locale/en-US';
 
 class Task {
     constructor(name, desc, dueDate, priority, isComplete) {
