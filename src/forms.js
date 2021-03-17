@@ -11,6 +11,15 @@ class Form {
         this.submitBtn = document.querySelector(`#submit-${type}-btn`),
         this.displayBtn = document.querySelector(`#disp-${type}-form-btn`)
     }
+    isNameNotEmpty() { // Checks if name input is empty.
+        const name = this.el.elements[`${this.type}-name`].value;
+        if (!name.match(/\S/)) { // If has no value besides space.
+            alert (`You must enter a ${this.type} name.`);
+            return false;
+        } else {
+            return true;
+        } 
+    }
     submit() {
         // Create an array with the input values.
         const inputValues = this.inputs.map(input => input.value);
@@ -19,29 +28,19 @@ class Form {
     }
 }
 
-// Old code of object's inputs:
-//     // Set form inputs as inner obj properties.
-//     inputs: {
-//         name: document.querySelector('#task-name'),
-//         desc: document.querySelector('#description'),
-//         dueDate: document.querySelector('#due-date'),
-//         priority: document.querySelector('#priority')
-//     },
-//     submit() {
-//         // Create empty args array.
-//         const inputValues = [];
-//         // Loop through inputs properties.
-//         for (let key in this.inputs) {
-//             // Store each input value in the args array.
-//             inputValues.push(this.inputs[key].value)
-//         }
-//         // Emit event with array of input values.
-//         events.emit('formSubmitted', inputValues);
-//     }
-
 // Create objects of both forms.
 const taskForm = new Form('task');
 const projectForm = new Form ('project');
+projectForm.isNameValid = function() {
+    const name = this.el.elements[`${this.type}-name`].value;
+    if (name === 'All Tasks') {
+        alert('You cannot name a project "All Tasks".');
+        return false;
+    } else {
+        return true;
+    }
+}
+
 // Store both forms in an array.
 const forms = [taskForm, projectForm];
 
@@ -58,9 +57,22 @@ events.on('projectsToggled', switchActiveForm);
 forms.forEach(form => {
     // Toggle if form is hidden when display/submit button is clicked.
     form.displayBtn.addEventListener('click', () => toggleClass(form.el, 'hidden'));
-    form.submitBtn.addEventListener('click', () => toggleClass(form.el, 'hidden'));
     // Run submit method when submit button is clicked.
-    form.submitBtn.addEventListener('click', () => form.submit());
+    form.submitBtn.addEventListener('click', () => {
+        // Check if form is valid first.
+        if ((form.type === 'project' && form.isNameValid()) || form.type === 'task') {
+            if (form.isNameNotEmpty()) {
+                // Form is valid, so run submit.
+                form.submit();
+                // Hide form after submission.
+                toggleClass(form.el, 'hidden');
+                // Return to stop rest of function.
+                return;
+            }
+        }
+        // If the checks return false.
+        console.log('Form could not be submitted.');
+    });
 });
 
 const projectSelect = {
