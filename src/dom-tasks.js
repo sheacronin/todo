@@ -81,15 +81,34 @@ function displayTaskDetails(task, taskEl) {
 
     // Add task name.
     const name = document.createElement('h2');
+    name.classList.add('details-name');
     name.textContent = task.name;
     detailsEl.appendChild(name);
 
+    // Add due date.
+    (function addDueDate() {
+        const dueDate = document.createElement('div');
+        dueDate.classList.add('details-date');
+        dueDate.textContent = task._dueDate ? task.dueDate : '';
+        detailsEl.appendChild(dueDate);
+    })();
+
     // Add button to hide details.
     const backBtn = document.createElement('button');
-    backBtn.textContent = 'Go back';
+    backBtn.textContent = '<<';
     // When button is clicked, remove details div.
     backBtn.addEventListener('click', () => tasksContainer.removeChild(detailsEl));
     detailsEl.appendChild(backBtn);
+
+    // Add edit button.
+    (function addEditBtn() {
+        const editBtn = document.createElement('button');
+        editBtn.textContent = 'Edit';
+        // When button is clicked...
+        // emit event....
+        // editBtn.addEventListener('click', () => events.emit('taskDeleted', task));
+        detailsEl.appendChild(editBtn);
+    })();
 
     // Add delete button.
     (function addDeleteBtn() {
@@ -115,6 +134,7 @@ function displayTaskDetails(task, taskEl) {
     // Add task description.
     const desc = document.createElement('p');
     desc.textContent = task.desc;
+    desc.classList.add('details-desc');
     detailsEl.appendChild(desc);
 
     // Add edit button
