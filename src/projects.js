@@ -1,7 +1,6 @@
 import {events} from './events';
-import {cleanRoom, editColors} from './tasks';
-import {updateLocalStorage, masterProject} from './index';
-import { projectSelect, taskForm } from './forms';
+import {masterProject} from './index';
+import {projectSelect} from './forms';
 
 class Project {
     constructor(name, color, tasks) {

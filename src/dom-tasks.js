@@ -1,6 +1,6 @@
 // Module purpose: Manage tasks in the DOM.
 import {events} from "./events";
-import {toggleClass} from './index';
+import {toggleClass, createElement} from './helpers';
 
 // Store tasks container div in a vairable.
 const tasksContainer = document.querySelector('#tasks-container');
@@ -78,6 +78,7 @@ function displayTaskDetails(task, taskEl) {
     // Create div element and add class.
     const detailsEl = document.createElement('div');
     detailsEl.classList.add('task-details');
+    createElement('div', '', 'task-details');
 
     // Add task name.
     const name = document.createElement('h2');
@@ -89,7 +90,7 @@ function displayTaskDetails(task, taskEl) {
     (function addDueDate() {
         const dueDate = document.createElement('div');
         dueDate.classList.add('details-date');
-        dueDate.textContent = task._dueDate ? task.dueDate : '';
+        dueDate.textContent = task._dueDate ? task.dueDate : 'No Due Date';
         detailsEl.appendChild(dueDate);
     })();
 

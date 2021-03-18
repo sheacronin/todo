@@ -1,5 +1,6 @@
 import {events} from './events';
-import {masterProject, toggleClass} from './index';
+import {masterProject} from './index';
+import {toggleClass} from './helpers';
 
 class Form {
     constructor(type) {

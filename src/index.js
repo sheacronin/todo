@@ -5,14 +5,6 @@ import {addProjectToList} from './dom-projects';
 import {Project, createProject} from './projects';
 import {events} from './events';
 
-// Helper fn.
-function toggleClass(el, cls) {
-    // Decide if complete class needs to be removed or added.
-    const action = el.classList.contains(cls) ? 'remove' : 'add';
-    // Remove/add the class.
-    el.classList[action](cls);
-}
-
 // Create default project obj to store all tasks.
 // This project will have an array prop to store every other project obj.
 const masterProject = createProject(['All Tasks', '#73a9bf']);
@@ -56,4 +48,4 @@ masterProject.projects.forEach(project => addProjectToList(project));
 // Switch to master project on page load.
 events.emit('projectSwitched', masterProject);
 
-export {toggleClass, masterProject, updateLocalStorage};
+export {masterProject, updateLocalStorage};

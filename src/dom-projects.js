@@ -1,5 +1,4 @@
-import {defaultProject} from './projects';
-import {toggleClass} from './index';
+import {toggleClass} from './helpers';
 import {events} from './events';
 
 function updateStyles(project) {
