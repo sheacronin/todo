@@ -71,29 +71,43 @@ function displayTaskDetails(task, taskEl) {
     // Create parent div element and add class.
     const detailsEl = createElement('div', '', 'task-details');
 
-    // Add task name.
-    const name = createElement('h2', task.name, 'details-name');
-    detailsEl.appendChild(name);
+    // Add priority info.
+    const priority = createElement('div', 'Priority: ' + task.priority, 'details-priority');
+    detailsEl.appendChild(priority);
 
     // Add due date.
     const dateTxt = task._dueDate ? task.dueDate : 'No Due Date';
     const dueDate = createElement('div', dateTxt, 'details-date');
     detailsEl.appendChild(dueDate);
 
+    // Add checkbox.
+    const checkbox = createElement('div', '', 'details-checkbox');
+        // Add event listener to checkbox to toggle completion in tasks.js.
+        checkbox.addEventListener('click', () => events.emit('checkboxClicked', task));
+        // Add event listener to add style class when task is toggled complete.
+        checkbox.addEventListener('click', () => toggleClass(taskEl, 'complete'));
+    detailsEl.appendChild(checkbox);
+
+    // Add task name.
+    const name = createElement('h2', task.name, 'details-name');
+    detailsEl.appendChild(name);
+
     // Add button to hide details.
-    const backBtn = createElement('button', '<<');
+    const backBtn = createElement('button', '<<', 'details-back');
         // When button is clicked, remove details div.
         backBtn.addEventListener('click', () => tasksContainer.removeChild(detailsEl));
     detailsEl.appendChild(backBtn);
 
     // Add edit button.
-    const editBtn = createElement('button', 'Edit');
+    const editBtn = createElement('button', 'Edit', 'details-edit');
         // When button is clicked, add event listener...
         // Event listener here.
     detailsEl.appendChild(editBtn);
 
     // Add delete button.
-    const deleteBtn = createElement('button', 'Delete');
+    const deleteBtn = createElement('button', 'Delete', 'details-delete');
+        // Make init hidden.
+        deleteBtn.classList.add('hidden');
         // When button is clicked, remove details div,
         deleteBtn.addEventListener('click', () => tasksContainer.removeChild(detailsEl));
         // remove task div,
@@ -101,10 +115,6 @@ function displayTaskDetails(task, taskEl) {
         // and emit event to remove task from project.
         deleteBtn.addEventListener('click', () => events.emit('taskDeleted', task));
     detailsEl.appendChild(deleteBtn);
-
-    // Add priority info.
-    const priority = document.createElement('div', 'Priority: ' + task.priority);
-    detailsEl.appendChild(priority);
 
     // Add task description.
     const desc = createElement('p', task.desc, 'details-desc');
