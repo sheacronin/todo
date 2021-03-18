@@ -7,44 +7,37 @@ const tasksContainer = document.querySelector('#tasks-container');
 
 // Fn to add a new task to the DOM.
 function displayTask(task, color) {
-    console.log(`displaying task ${task.name}`);
-    // Create task element and add class.
-    const taskEl = document.createElement('div');
-    taskEl.classList.add('task');
+    // Create parent task element and add class.
+    const taskEl = createElement('div', '', 'task');
 
     // Create and append checkbox to div element.
     const checkbox = document.createElement('input');
-    checkbox.setAttribute('type', 'checkbox');
-    // Add event listener to checkbox to toggle completion in tasks.js.
-    checkbox.addEventListener('click', () => events.emit('checkboxClicked', task));
-    // Add event listener to add style class when task is toggled complete.
-    checkbox.addEventListener('click', () => toggleClass(taskEl, 'complete'));
-    // Style checkbox with proj color if displaying All Tasks.
-    if (color) {
-        checkbox.style.boxShadow = '-1px 1px 5px ' + color;
-    }
+        checkbox.setAttribute('type', 'checkbox');
+        // Add event listener to checkbox to toggle completion in tasks.js.
+        checkbox.addEventListener('click', () => events.emit('checkboxClicked', task));
+        // Add event listener to add style class when task is toggled complete.
+        checkbox.addEventListener('click', () => toggleClass(taskEl, 'complete'));
+        // Style checkbox with proj color if displaying All Tasks.
+        if (color) {
+            checkbox.style.boxShadow = '-1px 1px 5px ' + color;
+        }
     taskEl.appendChild(checkbox);
 
     // Create and append p element with task name.
-    const name = document.createElement('div');
-    name.classList.add('task-card-name');
-    name.textContent = task.name;
-    // Add click listener to display tasks details.
-    name.addEventListener('click', () => displayTaskDetails(task, taskEl));
+    const name = createElement('div', task.name, 'task-card-name');
+        // Add click listener to display tasks details.
+        name.addEventListener('click', () => displayTaskDetails(task, taskEl));
     taskEl.appendChild(name);
 
     // Create due date element.
-    (function addDueDate() {
-        const dueDate = document.createElement('div');
-        dueDate.classList.add('task-card-date');
-        dueDate.textContent = task._dueDate ? task.dueDate : '';
-        taskEl.appendChild(dueDate);
-    })();
+    const dateTxt = task._dueDate ? task.dueDate : '';
+    const dueDate = createElement('div', dateTxt, 'task-card-date');
+    taskEl.appendChild(dueDate);
 
     // Check if task is complete and add complete styles if so.
     if (task.isComplete) toggleClass(taskEl, 'complete');
 
-    // Append task element to container.
+    // Append parent task element to container.
     tasksContainer.appendChild(taskEl);
 }
 // Listen for event from tasks.js and dom-projects.js
@@ -75,76 +68,49 @@ function displayAllTasks(project) {
 events.on('projectSwitched', displayAllTasks);
 
 function displayTaskDetails(task, taskEl) {
-    // Create div element and add class.
-    const detailsEl = document.createElement('div');
-    detailsEl.classList.add('task-details');
-    createElement('div', '', 'task-details');
+    // Create parent div element and add class.
+    const detailsEl = createElement('div', '', 'task-details');
 
     // Add task name.
-    const name = document.createElement('h2');
-    name.classList.add('details-name');
-    name.textContent = task.name;
+    const name = createElement('h2', task.name, 'details-name');
     detailsEl.appendChild(name);
 
     // Add due date.
-    (function addDueDate() {
-        const dueDate = document.createElement('div');
-        dueDate.classList.add('details-date');
-        dueDate.textContent = task._dueDate ? task.dueDate : 'No Due Date';
-        detailsEl.appendChild(dueDate);
-    })();
+    const dateTxt = task._dueDate ? task.dueDate : 'No Due Date';
+    const dueDate = createElement('div', dateTxt, 'details-date');
+    detailsEl.appendChild(dueDate);
 
     // Add button to hide details.
-    const backBtn = document.createElement('button');
-    backBtn.textContent = '<<';
-    // When button is clicked, remove details div.
-    backBtn.addEventListener('click', () => tasksContainer.removeChild(detailsEl));
+    const backBtn = createElement('button', '<<');
+        // When button is clicked, remove details div.
+        backBtn.addEventListener('click', () => tasksContainer.removeChild(detailsEl));
     detailsEl.appendChild(backBtn);
 
     // Add edit button.
-    (function addEditBtn() {
-        const editBtn = document.createElement('button');
-        editBtn.textContent = 'Edit';
-        // When button is clicked...
-        // emit event....
-        // editBtn.addEventListener('click', () => events.emit('taskDeleted', task));
-        detailsEl.appendChild(editBtn);
-    })();
+    const editBtn = createElement('button', 'Edit');
+        // When button is clicked, add event listener...
+        // Event listener here.
+    detailsEl.appendChild(editBtn);
 
     // Add delete button.
-    (function addDeleteBtn() {
-        const deleteBtn = document.createElement('button');
-        deleteBtn.textContent = 'Delete';
-        // When button is clicked...
-        // remove details div,
+    const deleteBtn = createElement('button', 'Delete');
+        // When button is clicked, remove details div,
         deleteBtn.addEventListener('click', () => tasksContainer.removeChild(detailsEl));
         // remove task div,
         deleteBtn.addEventListener('click', () => tasksContainer.removeChild(taskEl));
         // and emit event to remove task from project.
         deleteBtn.addEventListener('click', () => events.emit('taskDeleted', task));
-        detailsEl.appendChild(deleteBtn);
-    })();
+    detailsEl.appendChild(deleteBtn);
 
     // Add priority info.
-    (function addPriority() {
-        const priority = document.createElement('div');
-        priority.textContent = 'Priority: ' + task.priority;
-        detailsEl.appendChild(priority);
-    })();
+    const priority = document.createElement('div', 'Priority: ' + task.priority);
+    detailsEl.appendChild(priority);
 
     // Add task description.
-    const desc = document.createElement('p');
-    desc.textContent = task.desc;
-    desc.classList.add('details-desc');
+    const desc = createElement('p', task.desc, 'details-desc');
     detailsEl.appendChild(desc);
 
-    // Add edit button
-    (function addEditBtn() {
-        const editBtn = document.createElement('button');
-        editBtn.textContent = 'Edit Task';
-    })();
-
-    // Append details element to container.
+    // Append parent details element to container.
     tasksContainer.appendChild(detailsEl);
 }
 
