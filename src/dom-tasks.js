@@ -26,7 +26,7 @@ function displayTask(task, color) {
     // Create and append p element with task name.
     const name = createElement('div', task.name, 'task-card-name');
         // Add click listener to display tasks details.
-        name.addEventListener('click', () => displayTaskDetails(task, taskEl));
+        name.addEventListener('click', () => taskDetails(task, taskEl).display());
     taskEl.appendChild(name);
 
     // Create due date element.
@@ -67,61 +67,192 @@ function displayAllTasks(project) {
 }
 events.on('projectSwitched', displayAllTasks);
 
-function displayTaskDetails(task, taskEl) {
-    // Create parent div element and add class.
-    const detailsEl = createElement('div', '', 'task-details');
+// Attempt to refactor taskDetails into a factory function.
+const taskDetails = (task, taskEl) => {
+    const parentEl = createElement('div', '', 'task-details');
 
-    // Add priority info.
-    const priority = createElement('div', 'Priority: ' + task.priority, 'details-priority');
-    detailsEl.appendChild(priority);
+    let isEditable = false;
 
-    // Add due date.
-    const dateTxt = task._dueDate ? task.dueDate : 'No Due Date';
-    const dueDate = createElement('div', dateTxt, 'details-date');
-    detailsEl.appendChild(dueDate);
+    function styleCircles(e) {
+        const newPriority = e.target.dataset.num;
+        // Loop through each circle.
+        for (let i = 0; i < priorityCircles.length; i++) {
+            const circle = priorityCircles[i];
+            // If circle should be filled for this new priority...
+            if (circle.dataset.num <= newPriority) {
+                // If it's already filled, continue.
+                if (circle.classList.contains('filled-circle')) {
+                    continue;
+                } else { // If it's not yet filled, fill it.
+                    circle.classList.add('filled-circle');
+                }
+            } else { // If circle should NOT be filled...
+                // If it's filled, remove filled class.
+                if (circle.classList.contains('filled-circle')) {
+                    circle.classList.remove('filled-circle');
+                } else { // If it's not filled, continue.
+                    continue;
+                }
+            }
+        }
+    }
 
-    // Add checkbox.
-    const checkbox = createElement('div', '', 'details-checkbox');
-        // Add event listener to checkbox to toggle completion in tasks.js.
-        checkbox.addEventListener('click', () => events.emit('checkboxClicked', task));
-        // Add event listener to add style class when task is toggled complete.
-        checkbox.addEventListener('click', () => toggleClass(taskEl, 'complete'));
-    detailsEl.appendChild(checkbox);
+    const toggleEditMode = () => {
+        isEditable = !isEditable;
 
-    // Add task name.
-    const name = createElement('h2', task.name, 'details-name');
-    detailsEl.appendChild(name);
+        if (isEditable) {
+            console.log('Engaging edit mode...');
+            children.priority.circles.forEach(circle => {
+                circle.addEventListener('click', children.priority.styleCircles);
+            });
+    
+            // Due date - append a date input to the div?
+    
+            children.name.contentEditable = true;
+            children.desc.contentEditable = true;
+            // Store all this above data in variables.?
+        } else {
+            console.log('Stopping edit mode...');
+            children.priority.circles.forEach(circle => {
+                circle.removeEventListener('click', children.priority.styleCircles);
+            });
+            children.name.contentEditable = false;
+            children.desc.contentEditable = false;
+            // Get data from user inputs.
+            // Emit taskUpdated event with the updated data.
+            // tasks.js will use setters to update.
+        }
+    }
 
-    // Add button to hide details.
-    const backBtn = createElement('button', '<<', 'details-back');
-        // When button is clicked, remove details div.
-        backBtn.addEventListener('click', () => tasksContainer.removeChild(detailsEl));
-    detailsEl.appendChild(backBtn);
+    const children = (() => {
+        const priority = (() => {
+            const el = createElement('div', '', 'details-priority');
 
-    // Add edit button.
-    const editBtn = createElement('button', 'Edit', 'details-edit');
-        // When button is clicked, add event listener...
-        // Event listener here.
-    detailsEl.appendChild(editBtn);
+            // Add label.
+            const priorityLabel = createElement('div', 'Priority:', 'priority-label');
+            el.appendChild(priorityLabel);
 
-    // Add delete button.
-    const deleteBtn = createElement('button', 'Delete', 'details-delete');
-        // Make init hidden.
-        deleteBtn.classList.add('hidden');
-        // When button is clicked, remove details div,
-        deleteBtn.addEventListener('click', () => tasksContainer.removeChild(detailsEl));
-        // remove task div,
-        deleteBtn.addEventListener('click', () => tasksContainer.removeChild(taskEl));
-        // and emit event to remove task from project.
-        deleteBtn.addEventListener('click', () => events.emit('taskDeleted', task));
-    detailsEl.appendChild(deleteBtn);
+            // Add circles.
+            const priorityNum = parseInt(task.priority);
+            // Empty array to store circles.
+            const circles = [];
+            // Create 3 circles.
+            for (let n = 1; n <= 3; n++) {
+                const circle = createElement('div', '', 'priority-circle');
+                // Add data attribute to identify the circle later.
+                circle.dataset.num = n;
+                // If circle number is <= priority number, fill it in.
+                if (n <= priorityNum) {
+                    circle.classList.add('filled-circle');
+                }
+                // Push into array and append to element.
+                circles.push(circle);
+                el.appendChild(circle);
+            }
 
-    // Add task description.
-    const desc = createElement('p', task.desc, 'details-desc');
-    detailsEl.appendChild(desc);
+            const styleCircles = (e) => {
+                const newPriority = e.target.dataset.num;
+                // Loop through each circle.
+                for (let i = 0; i < circles.length; i++) {
+                    const circle = circles[i];
+                    // If circle should be filled for this new priority...
+                    if (circle.dataset.num <= newPriority) {
+                        // If it's already filled, continue.
+                        if (circle.classList.contains('filled-circle')) {
+                            continue;
+                        } else { // If it's not yet filled, fill it.
+                            circle.classList.add('filled-circle');
+                        }
+                    } else { // If circle should NOT be filled...
+                        // If it's filled, remove filled class.
+                        if (circle.classList.contains('filled-circle')) {
+                            circle.classList.remove('filled-circle');
+                        } else { // If it's not filled, continue.
+                            continue;
+                        }
+                    }
+                }
+            }
 
-    // Append parent details element to container.
-    tasksContainer.appendChild(detailsEl);
+            return {el, circles, styleCircles} 
+        })();
+
+        const dueDate = (() => {
+            const dateTxt = task._dueDate ? task.dueDate : 'No Due Date';
+            const dueDate = createElement('div', dateTxt, 'details-date');
+            return dueDate;
+        })();
+
+        const checkbox = (() => {
+            const checkbox = createElement('div', '', 'details-checkbox');
+            // Add event listener to checkbox to toggle completion in tasks.js.
+            checkbox.addEventListener('click', () => events.emit('checkboxClicked', task));
+            // Add event listener to add style class when task is toggled complete.
+            checkbox.addEventListener('click', () => toggleClass(taskEl, 'complete'));
+            return checkbox;
+        })();
+
+        const name = createElement('h2', task.name, 'details-name');
+
+        // Add task description.
+        const desc = createElement('p', task.desc, 'details-desc');
+
+        // Add button to hide details.
+        const backBtn = (() => {
+            const backBtn = createElement('button', '<<', 'details-back');
+            // When button is clicked, remove details div.
+            backBtn.addEventListener('click', () => tasksContainer.removeChild(parentEl));
+            return backBtn;
+        })();
+
+        // Add delete button.
+        const deleteBtn = (() => {
+            const deleteBtn = createElement('button', 'Delete');
+            // Set ID to ensure styles override other class.
+            deleteBtn.setAttribute('id', 'details-delete');
+            // Make init hidden.
+            deleteBtn.classList.add('hidden');
+            // When button is clicked, remove details div,
+            deleteBtn.addEventListener('click', () => tasksContainer.removeChild(parentEl));
+            // remove task div,
+            deleteBtn.addEventListener('click', () => tasksContainer.removeChild(taskEl));
+            // and emit event to remove task from project.
+            deleteBtn.addEventListener('click', () => events.emit('taskDeleted', task));
+            return deleteBtn;
+        })();
+
+        // Add edit button.
+        const editBtn = (() => {
+            const editBtn = createElement('button', 'Edit', 'details-edit');
+            // When button is clicked, toggle delete btn display,
+            editBtn.addEventListener('click', () => toggleClass(deleteBtn, 'hidden'));
+            // add edit button style/animation,
+            // ----- code here -----
+            // and make elements editable.
+            editBtn.addEventListener('click', toggleEditMode);
+            return editBtn;
+        })();
+
+        return {priority, dueDate, checkbox, name, desc,
+                backBtn, deleteBtn, editBtn}
+    })();
+
+    const display = () => {
+        console.log('displaying...');
+        // Loop through each child el and append to parent.
+        for (let el in children) {
+            const child = children[el];
+            if (child === children.priority) { // If priority, which is an obj.
+                parentEl.appendChild(child.el);
+            } else {
+                parentEl.appendChild(child);
+            }
+        }
+        // Append parent to container.
+        tasksContainer.appendChild(parentEl);
+    }
+
+    return {display}
 }
 
 export {displayTask};
