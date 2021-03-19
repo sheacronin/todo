@@ -67,70 +67,49 @@ function displayAllTasks(project) {
 }
 events.on('projectSwitched', displayAllTasks);
 
-// Attempt to refactor taskDetails into a factory function.
+
+// taskDetails as a factory function.
 const taskDetails = (task, taskEl) => {
-    const parentEl = createElement('div', '', 'task-details');
+    const container = createElement('div', '', 'task-details');
 
     let isEditable = false;
 
-    function styleCircles(e) {
-        const newPriority = e.target.dataset.num;
-        // Loop through each circle.
-        for (let i = 0; i < priorityCircles.length; i++) {
-            const circle = priorityCircles[i];
-            // If circle should be filled for this new priority...
-            if (circle.dataset.num <= newPriority) {
-                // If it's already filled, continue.
-                if (circle.classList.contains('filled-circle')) {
-                    continue;
-                } else { // If it's not yet filled, fill it.
-                    circle.classList.add('filled-circle');
-                }
-            } else { // If circle should NOT be filled...
-                // If it's filled, remove filled class.
-                if (circle.classList.contains('filled-circle')) {
-                    circle.classList.remove('filled-circle');
-                } else { // If it's not filled, continue.
-                    continue;
-                }
-            }
-        }
-    }
-
     const toggleEditMode = () => {
         isEditable = !isEditable;
+        // Toggle due date input whether or not in edit mode.
+        els.dueDate.toggleInput();
 
         if (isEditable) {
             console.log('Engaging edit mode...');
-            children.priority.circles.forEach(circle => {
-                circle.addEventListener('click', children.priority.styleCircles);
+            // Allow priority circles to be changed.
+            els.priority.circles.forEach(circle => {
+                circle.addEventListener('click', els.priority.styleCircles);
             });
     
-            // Due date - append a date input to the div?
-    
-            children.name.contentEditable = true;
-            children.desc.contentEditable = true;
+            els.name.contentEditable = true;
+            els.desc.contentEditable = true;
             // Store all this above data in variables.?
         } else {
             console.log('Stopping edit mode...');
-            children.priority.circles.forEach(circle => {
-                circle.removeEventListener('click', children.priority.styleCircles);
+            // Stop priority circles from being able to be changed.
+            els.priority.circles.forEach(circle => {
+                circle.removeEventListener('click', els.priority.styleCircles);
             });
-            children.name.contentEditable = false;
-            children.desc.contentEditable = false;
+            els.name.contentEditable = false;
+            els.desc.contentEditable = false;
             // Get data from user inputs.
             // Emit taskUpdated event with the updated data.
             // tasks.js will use setters to update.
         }
     }
 
-    const children = (() => {
+    const els = (() => {
         const priority = (() => {
-            const el = createElement('div', '', 'details-priority');
+            const main = createElement('div', '', 'details-priority');
 
             // Add label.
             const priorityLabel = createElement('div', 'Priority:', 'priority-label');
-            el.appendChild(priorityLabel);
+            main.appendChild(priorityLabel);
 
             // Add circles.
             const priorityNum = parseInt(task.priority);
@@ -147,7 +126,7 @@ const taskDetails = (task, taskEl) => {
                 }
                 // Push into array and append to element.
                 circles.push(circle);
-                el.appendChild(circle);
+                main.appendChild(circle);
             }
 
             const styleCircles = (e) => {
@@ -155,32 +134,47 @@ const taskDetails = (task, taskEl) => {
                 // Loop through each circle.
                 for (let i = 0; i < circles.length; i++) {
                     const circle = circles[i];
-                    // If circle should be filled for this new priority...
-                    if (circle.dataset.num <= newPriority) {
-                        // If it's already filled, continue.
-                        if (circle.classList.contains('filled-circle')) {
-                            continue;
-                        } else { // If it's not yet filled, fill it.
-                            circle.classList.add('filled-circle');
-                        }
-                    } else { // If circle should NOT be filled...
-                        // If it's filled, remove filled class.
-                        if (circle.classList.contains('filled-circle')) {
-                            circle.classList.remove('filled-circle');
-                        } else { // If it's not filled, continue.
-                            continue;
-                        }
+                    // If circle should be filled for this new priority
+                    if ((circle.dataset.num <= newPriority && 
+                        // And is not yet filled
+                        !circle.classList.contains('filled-circle')) ||
+                        // OR if circle shouldn't be filled
+                        (circle.dataset.num  > newPriority &&
+                        // And is already filled
+                        circle.classList.contains('filled-circle'))) {
+                        // Toggle the filling.
+                        toggleClass(circle, 'filled-circle');
+                    } else { // Otherwise, don't change the style.
+                        continue;
                     }
                 }
             }
 
-            return {el, circles, styleCircles} 
+            return {main, circles, styleCircles} 
         })();
 
         const dueDate = (() => {
             const dateTxt = task._dueDate ? task.dueDate : 'No Due Date';
-            const dueDate = createElement('div', dateTxt, 'details-date');
-            return dueDate;
+            const main = createElement('div', dateTxt, 'details-date');
+
+            // Fn to update date text.
+            const updateTxt = (e) => {
+                const dateInput = e.target.value;
+                main.textContent = dateInput;
+            }
+
+            const input = createElement('input', '', 'hidden');
+            input.setAttribute('type', 'date');
+            main.appendChild(input);
+            // Add event listener to input to update dateTxt.
+            input.addEventListener('input', updateTxt);
+
+            // Fn to allow new input.
+            const toggleInput = () => {
+                toggleClass(input, 'hidden');
+            }
+
+            return {main, toggleInput};
         })();
 
         const checkbox = (() => {
@@ -201,7 +195,7 @@ const taskDetails = (task, taskEl) => {
         const backBtn = (() => {
             const backBtn = createElement('button', '<<', 'details-back');
             // When button is clicked, remove details div.
-            backBtn.addEventListener('click', () => tasksContainer.removeChild(parentEl));
+            backBtn.addEventListener('click', () => tasksContainer.removeChild(container));
             return backBtn;
         })();
 
@@ -213,7 +207,7 @@ const taskDetails = (task, taskEl) => {
             // Make init hidden.
             deleteBtn.classList.add('hidden');
             // When button is clicked, remove details div,
-            deleteBtn.addEventListener('click', () => tasksContainer.removeChild(parentEl));
+            deleteBtn.addEventListener('click', () => tasksContainer.removeChild(container));
             // remove task div,
             deleteBtn.addEventListener('click', () => tasksContainer.removeChild(taskEl));
             // and emit event to remove task from project.
@@ -240,16 +234,16 @@ const taskDetails = (task, taskEl) => {
     const display = () => {
         console.log('displaying...');
         // Loop through each child el and append to parent.
-        for (let el in children) {
-            const child = children[el];
-            if (child === children.priority) { // If priority, which is an obj.
-                parentEl.appendChild(child.el);
+        for (let el in els) {
+            const element = els[el];
+            if (element === els.priority | element === els.dueDate) { // If els that are objs.
+                container.appendChild(element.main);
             } else {
-                parentEl.appendChild(child);
+                container.appendChild(element);
             }
         }
         // Append parent to container.
-        tasksContainer.appendChild(parentEl);
+        tasksContainer.appendChild(container);
     }
 
     return {display}
