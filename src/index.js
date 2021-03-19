@@ -1,5 +1,5 @@
 import {Task, createTask} from './tasks';
-import {displayTask, displayAllTasks} from './dom-tasks';
+import {displayAllTasks} from './dom-tasks';
 import {taskForm, projectSelect} from './forms';
 import {addProjectToList} from './dom-projects';
 import {Project, createProject} from './projects';

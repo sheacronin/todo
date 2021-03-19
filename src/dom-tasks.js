@@ -6,43 +6,61 @@ import {formatRelative} from 'date-fns';
 // Store tasks container div in a vairable.
 const tasksContainer = document.querySelector('#tasks-container');
 
-// Fn to add a new task to the DOM.
-function displayTask(task, color) {
+// Refactoring displayTask to taskCard factory function.
+const taskCard = (task, color) => {
     // Create parent task element and add class.
-    const taskEl = createElement('div', '', 'task');
+    const card = createElement('div', '', 'task');
 
-    // Create and append checkbox to div element.
-    const checkbox = document.createElement('input');
-        checkbox.setAttribute('type', 'checkbox');
-        // Add event listener to checkbox to toggle completion in tasks.js.
-        checkbox.addEventListener('click', () => events.emit('checkboxClicked', task));
-        // Add event listener to add style class when task is toggled complete.
-        checkbox.addEventListener('click', () => toggleClass(taskEl, 'complete'));
-        // Style checkbox with proj color if displaying All Tasks.
-        if (color) {
-            checkbox.style.boxShadow = '-1px 1px 5px ' + color;
+    const els = (() => {
+        const checkbox = (() => {
+            const checkbox = document.createElement('input');
+            checkbox.setAttribute('type', 'checkbox');
+            // Add event listener to checkbox to toggle completion in tasks.js.
+            checkbox.addEventListener('click', () => events.emit('checkboxClicked', task));
+            // Add event listener to add style class when task is toggled complete.
+            checkbox.addEventListener('click', () => toggleClass(card, 'complete'));
+            // Style checkbox with proj color if displaying All Tasks.
+            if (color) {
+                checkbox.style.boxShadow = '-1px 1px 5px ' + color;
+            }
+            return checkbox;
+        })();
+
+        const name = (() => {
+            const name = createElement('div', task.name, 'task-card-name');
+            // Add click listener to display tasks details.
+            name.addEventListener('click', () => taskDetails(task, card).display());
+            return name;
+        })();
+
+        const dueDate = (() => {
+            const dateTxt = task._dueDate ? task.dueDate : '';
+            const dueDate = createElement('div', dateTxt, 'task-card-date');
+            return dueDate;
+        })();
+
+        // const priority = (() => {
+
+        // })();
+        return {checkbox, name, dueDate}
+    })();
+
+    const display = () => {
+        // Loop through each child el and append to parent.
+        for (let el in els) {
+            const element = els[el];
+            card.appendChild(element);
         }
-    taskEl.appendChild(checkbox);
+        // Check if task is complete and add complete styles if so.
+        if (task.isComplete) toggleClass(card, 'complete');
+        // Append parent to container.
+        tasksContainer.appendChild(card);
+    }
 
-    // Create and append p element with task name.
-    const name = createElement('div', task.name, 'task-card-name');
-        // Add click listener to display tasks details.
-        name.addEventListener('click', () => taskDetails(task, taskEl).display());
-    taskEl.appendChild(name);
-
-    // Create due date element.
-    const dateTxt = task._dueDate ? task.dueDate : '';
-    const dueDate = createElement('div', dateTxt, 'task-card-date');
-    taskEl.appendChild(dueDate);
-
-    // Check if task is complete and add complete styles if so.
-    if (task.isComplete) toggleClass(taskEl, 'complete');
-
-    // Append parent task element to container.
-    tasksContainer.appendChild(taskEl);
+    return {display}
 }
 // Listen for event from tasks.js and dom-projects.js
-events.on('taskCreated', displayTask);
+events.on('taskCreated', taskCard(task).display);
 
 // Wipe out all tasks when project is switched.
 function removeAllTasks() {
@@ -60,11 +78,11 @@ function displayAllTasks(project) {
     if (project.name === 'All Tasks') { // If Master Project
         // Display each task from each project.
         project.projects.forEach(childProject => {
-            childProject.tasks.forEach(task => displayTask(task, childProject.color));
+            childProject.tasks.forEach(task => taskCard(task, childProject.color).display());
         });
     }
     // If normal project, and for unsorted masterProject tasks.
-    project.tasks.forEach(task => displayTask(task));
+    project.tasks.forEach(task => taskCard(task).display());
 }
 events.on('projectSwitched', displayAllTasks);
 
@@ -103,8 +121,11 @@ const taskDetails = (task, taskEl) => {
             task.name = els.name.textContent;
             // Set desc from desc element.
             task.desc = els.desc.textContent;
-            // Set due date from the date input.
-            task.dueDate = els.dueDate.input.value;
+            // IF there was user input
+            if (els.dueDate.input.value) {
+                // Set due date from the date input.
+                task.dueDate = els.dueDate.input.value;
+            }   
             // Get priority from circles.
             // Loop through each circle.
             task.priority = (() => {
@@ -274,7 +295,6 @@ const taskDetails = (task, taskEl) => {
     })();
 
     const display = () => {
-        console.log('displaying...');
         // Loop through each child el and append to parent.
         for (let el in els) {
             const element = els[el];
@@ -291,4 +311,4 @@ const taskDetails = (task, taskEl) => {
     return {display}
 }
 
-export {displayTask};
+export {taskCard};
