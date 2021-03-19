@@ -191,13 +191,25 @@ const taskDetails = (task, taskEl) => {
             checkbox.addEventListener('click', () => events.emit('checkboxClicked', task));
             // Add event listener to add style class when task is toggled complete.
             checkbox.addEventListener('click', () => toggleClass(taskEl, 'complete'));
+            // Style the task details name as well.
+            checkbox.addEventListener('click', () => toggleClass(name, 'complete'));
             return checkbox;
         })();
 
-        const name = createElement('h2', task.name, 'details-name');
+        const name = (() => {
+            const name = createElement('h2', task.name, 'details-name');
+            // Check if task is complete and add complete styles if so.
+            if (task.isComplete) name.classList.add('complete');
+            return name;
+        })();
 
         // Add task description.
-        const desc = createElement('p', task.desc, 'details-desc');
+        const desc = (() => {
+            const descTxt = task.desc ? task.desc : 
+                'Click the edit button to add details about your task...';
+            const desc = createElement('p', descTxt, 'details-desc');
+            return desc;
+        })();
 
         // Add button to hide details.
         const backBtn = (() => {
