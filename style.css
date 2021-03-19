@@ -122,6 +122,14 @@ header {
     opacity: 0.5;
     font-size: 22px;
     grid-area: date;
+    position: relative;
+}
+
+.details-date input {
+    width: 50px;
+    position: absolute;
+    top: 30px;
+    right: 0;
 }
 
 .details-checkbox {
