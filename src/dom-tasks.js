@@ -1,6 +1,7 @@
 // Module purpose: Manage tasks in the DOM.
 import {events} from "./events";
-import {toggleClass, createElement} from './helpers';
+import {toggleClass, createElement, locale, convertToDate} from './helpers';
+import {formatRelative} from 'date-fns';
 
 // Store tasks container div in a vairable.
 const tasksContainer = document.querySelector('#tasks-container');
@@ -154,23 +155,30 @@ const taskDetails = (task, taskEl) => {
         })();
 
         const dueDate = (() => {
+            const main = createElement('div', '', 'details-date');
+
             const dateTxt = task._dueDate ? task.dueDate : 'No Due Date';
-            const main = createElement('div', dateTxt, 'details-date');
+            const dateTxtEl = createElement('div', dateTxt);
+            main.appendChild(dateTxtEl);
 
             // Fn to update date text.
             const updateTxt = (e) => {
+                console.log('input received.');
                 const dateInput = e.target.value;
-                main.textContent = dateInput;
+                const newDate = convertToDate(dateInput);
+                const formattedDate = formatRelative(newDate, new Date(), { locale });
+                dateTxtEl.textContent = formattedDate;
             }
 
             const input = createElement('input', '', 'hidden');
             input.setAttribute('type', 'date');
-            main.appendChild(input);
             // Add event listener to input to update dateTxt.
             input.addEventListener('input', updateTxt);
+            main.appendChild(input);
 
             // Fn to allow new input.
             const toggleInput = () => {
+                console.log('Toggling date input...');
                 toggleClass(input, 'hidden');
             }
 

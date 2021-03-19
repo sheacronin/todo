@@ -1,3 +1,5 @@
+import enUS from 'date-fns/locale/en-US';
+
 // Helper fns.
 
 function toggleClass(el, cls) {
@@ -19,4 +21,25 @@ function createElement(tag, txt, cls) {
     return el;
 }
 
-export {toggleClass, createElement}
+// date-fns functions
+// Create custom relative formatting.
+const formatRelativeLocale = {
+    lastWeek: "'Last' eeee",
+    yesterday: "'Yesterday'",
+    today: "'Today'",
+    tomorrow: "'Tomorrow'",
+    nextWeek: "eeee",
+    other: 'MMM do', // Formatted like 'Mar 26th'.
+};
+// Store custom formatting in locale object.
+const locale = {
+    ...enUS,
+    formatRelative: (token) => formatRelativeLocale[token],
+}
+// Fn to convert date input to Date obj.
+function convertToDate(input) {
+    const date = new Date(input + ' 00:00');
+    return date;
+}
+
+export {toggleClass, createElement, locale, convertToDate}

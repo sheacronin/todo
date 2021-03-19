@@ -1,6 +1,6 @@
 import {events} from './events';
-import { formatRelative, subDays, addDays, format } from 'date-fns';
-import enUS from 'date-fns/locale/en-US';
+import {locale, convertToDate} from './helpers';
+import {formatRelative} from 'date-fns';
 
 class Task {
     constructor(name, desc, dueDate, priority, isComplete) {
@@ -15,22 +15,8 @@ class Task {
         events.emit('taskUpdated');
     }
     get dueDate() {
-        // Create custom relative formatting.
-        const formatRelativeLocale = {
-            lastWeek: "'Last' eeee",
-            yesterday: "'Yesterday'",
-            today: "'Today'",
-            tomorrow: "'Tomorrow'",
-            nextWeek: "eeee",
-            other: 'MMM do', // Formatted like 'Mar 26th'.
-        };
-        // Store custom formatting in locale object.
-        const locale = {
-            ...enUS,
-            formatRelative: (token) => formatRelativeLocale[token],
-        }
         // Store due date in Date object.
-        const date = new Date(this._dueDate + ' 00:00');
+        const date = convertToDate(this._dueDate);
         // Return due date relative to current date.
         return formatRelative(date, new Date(), { locale });
     }
