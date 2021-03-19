@@ -99,8 +99,30 @@ const taskDetails = (task, taskEl) => {
             els.name.contentEditable = false;
             els.desc.contentEditable = false;
             // Get data from user inputs.
-            // Emit taskUpdated event with the updated data.
-            // tasks.js will use setters to update.
+            // Set name from name element.
+            task.name = els.name.textContent;
+            // Set desc from desc element.
+            task.desc = els.desc.textContent;
+            // Set due date from the date input.
+            task.dueDate = els.dueDate.input.value;
+            // Get priority from circles.
+            // Loop through each circle.
+            task.priority = (() => {
+                for (let i = 0; i < 3; i++) {
+                    const circle = els.priority.circles[i];
+                    // If a circle isn't filled,
+                    if (!circle.classList.contains('filled-circle')) {
+                        // Return the index of the circle
+                        // which is the that circle's priority minus 1.
+                        return i;
+                    }
+                }
+                // If all circles are filled, the priority is 3.
+                return 3;
+            })();
+            // Emit taskUpdated event to update local storage.
+            events.emit('taskUpdated');
+            // displayTasks needs to update the taskEl
         }
     }
 
@@ -182,7 +204,7 @@ const taskDetails = (task, taskEl) => {
                 toggleClass(input, 'hidden');
             }
 
-            return {main, toggleInput};
+            return {main, input, toggleInput};
         })();
 
         const checkbox = (() => {

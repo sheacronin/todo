@@ -20,6 +20,10 @@ class Task {
         // Return due date relative to current date.
         return formatRelative(date, new Date(), { locale });
     }
+    set dueDate(input) {
+        // -- Could convert to date here instead of in getter.
+        this._dueDate = input;
+    }
 }
 
 // Fn to create a new task and emit an event.
