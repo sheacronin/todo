@@ -106,8 +106,10 @@ const taskDetails = (task, taskEl) => {
             });
     
             els.name.contentEditable = true;
+            // If placeholder text, get rid of it first,
+            if (!task.desc) els.desc.textContent = '';
+            // then make editable.
             els.desc.contentEditable = true;
-            // Store all this above data in variables.?
         } else {
             console.log('Stopping edit mode...');
             // Stop priority circles from being able to be changed.
