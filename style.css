@@ -31,7 +31,7 @@ header {
     overflow: scroll;
 }
 
-.task {
+.task-card {
     display: grid;
     height: 8vh;
     align-items: center;
@@ -42,14 +42,17 @@ header {
 }
 
 /* Checkbox */
-.task input {
+.task-card .checkbox {
     width: 20px;
     height: 20px;
+    background-color: white;
+    border: 1px solid #080b0d50;
+    border-radius: 4px;
     justify-self: center;
     box-shadow: -1px 1px 5px var(--proj-color);
 }
 
-.task-card-name {
+.task-card .name {
     display: flex;
     align-items: center;
     width: 100%;
@@ -57,7 +60,7 @@ header {
     margin: 0;
 }
 
-.task-card-date {
+.task-card .date {
     font-size: 16px;
     position: absolute;
     top: 9px;
@@ -89,7 +92,7 @@ header {
     justify-items: center;
 }
 
-.details-priority {
+.task-details .priority {
     opacity: 0.5;
     font-size: 22px;
     grid-area: priority;
@@ -118,21 +121,21 @@ header {
     background-color: #080b0d;
 }
 
-.details-date {
+.task-details .date {
     opacity: 0.5;
     font-size: 22px;
     grid-area: date;
     position: relative;
 }
 
-.details-date input {
+.task-details .date input {
     width: 50px;
     position: absolute;
     top: 30px;
     right: 0;
 }
 
-.details-checkbox {
+.task-details .checkbox {
     width: 30px;
     height: 30px;
     background-color: white;
@@ -142,13 +145,13 @@ header {
     grid-area: box;
 }
 
-.details-name {
+.task-details .name {
     margin: 0;
     grid-area: title;
     justify-self: start;
 }
 
-.details-desc {
+.task-details .desc {
     border-top: 2px solid #080b0d20;
     border-bottom: 2px solid #080b0d20;
     text-align: left;
