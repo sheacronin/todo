@@ -43,8 +43,8 @@ events.on('taskCreated', (task) => {
 
 // Event listener to remove deleted tasks from active project.
 events.on('taskDeleted', (task) => {
-    if (activeProject === masterProject) {
-        // If the task doesn't belong to the master project.
+    // if (activeProject === masterProject) 
+    //     // If the task doesn't belong to the master project.
         if (!masterProject.tasks.includes(task)) {
             // Loop through all the other projects
             // to find which project needs to remove the task.
@@ -52,13 +52,13 @@ events.on('taskDeleted', (task) => {
                 const project = masterProject.projects[i];
                 // Run method to remove task once it is found in project.
                 if (project.tasks.includes(task)) project.removeTask(task);
-                return;
             }
+        } else {
+            masterProject.removeTask(task);
         }
-    }
     // Remove task from active project once it is determined it must be
     // the owner of the task.
-    activeProject.removeTask(task)
+    //activeProject.removeTask(task)
 });
 
 // Fn to create a new project and emit an event.

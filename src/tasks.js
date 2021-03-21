@@ -15,10 +15,12 @@ class Task {
         events.emit('taskUpdated');
     }
     get dueDate() {
-        // Store due date in Date object.
-        const date = convertToDate(this._dueDate);
-        // Return due date relative to current date.
-        return formatRelative(date, new Date(), { locale });
+        if(this._dueDate) { // If there is a due date
+            // Store due date in Date object.
+            const date = convertToDate(this._dueDate);
+            // Return due date relative to current date.
+            return formatRelative(date, new Date(), { locale });
+        }
     }
     set dueDate(input) {
         // -- Could convert to date here instead of in getter.
