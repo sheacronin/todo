@@ -1,5 +1,4 @@
 import {events} from './events';
-import {masterProject} from './index';
 import {projectSelect} from './forms';
 
 class Project {
@@ -23,15 +22,17 @@ class Project {
     }
 }
 
-// Variable to store project user displays.
-let activeProject;
-// Fn to switch active project.
-function assignActiveProject(project) {
-    console.log(`assigning ${project.name} as active project...`);
-    activeProject = project;
+// Create default project obj to store all tasks.
+// This project will have an array prop to store every other project obj.
+const masterProject = createProject(['All Tasks', '#73a9bf']);
+// Fn to run when user clicks delete button on project.
+masterProject.deleteProject = (project) => {
+    const i = masterProject.projects.indexOf(project);
+    masterProject.projects.splice(i, 1);
+    events.emit('projectUpdated');
 }
-// Change active project when dom-projects emits event.
-events.on('projectSwitched', assignActiveProject);
+events.on('projectRemoved', masterProject.deleteProject);
+
 // Event listener to add new tasks to active project.
 events.on('taskCreated', (task) => {
     // Store the selected project.
@@ -76,4 +77,4 @@ function createProject(args) {
 // When form.js submits projects form:
 events.on('projectFormSubmitted', createProject);
 
-export {Project, createProject};
+export {Project, createProject, masterProject};

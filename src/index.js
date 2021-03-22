@@ -2,12 +2,8 @@ import {Task, createTask} from './tasks';
 import {displayAllTasks} from './dom-tasks';
 import {taskForm, projectSelect} from './forms';
 import {addProjectToList} from './dom-projects';
-import {Project, createProject} from './projects';
+import {Project, createProject, masterProject} from './projects';
 import {events} from './events';
-
-// Create default project obj to store all tasks.
-// This project will have an array prop to store every other project obj.
-const masterProject = createProject(['All Tasks', '#73a9bf']);
 
 // Local storage stuff:
 // Function to update projects in local storage.
@@ -48,4 +44,4 @@ masterProject.projects.forEach(project => addProjectToList(project));
 // Switch to master project on page load.
 events.emit('projectSwitched', masterProject);
 
-export {masterProject, updateLocalStorage};
+export {updateLocalStorage};

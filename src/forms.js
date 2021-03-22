@@ -1,5 +1,5 @@
 import {events} from './events';
-import {masterProject} from './index';
+import {masterProject} from './projects';
 import {toggleClass} from './helpers';
 
 class Form {
