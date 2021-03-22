@@ -264,6 +264,29 @@ textarea {
     letter-spacing: 1px;
 }
 
+.project-delete {
+    position: absolute;
+    left: 0;
+    margin-left: 10px;
+    font-family: 'Rubik', sans-serif;
+    font-size: 16px;
+    border-radius: 25px;
+    border: none;
+    padding: 10px;
+    background-color: #F1F6F940;
+    color: #080b0d60;
+}
+
+.project-delete:hover {
+    background-color: #BF7384;
+}
+
+.project-name {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
 footer {
     position: fixed;
     width: 100vw;

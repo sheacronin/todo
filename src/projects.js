@@ -12,7 +12,6 @@ class Project {
     // Fn to run when a new task is created.
     addTask(task) {
         this.tasks.push(task);
-        console.log(masterProject);
         events.emit('projectUpdated');
     }
     // Fn to run when task is deleted.
@@ -43,22 +42,18 @@ events.on('taskCreated', (task) => {
 
 // Event listener to remove deleted tasks from active project.
 events.on('taskDeleted', (task) => {
-    // if (activeProject === masterProject) 
-    //     // If the task doesn't belong to the master project.
-        if (!masterProject.tasks.includes(task)) {
-            // Loop through all the other projects
-            // to find which project needs to remove the task.
-            for (let i = 0; i < masterProject.projects.length; i++) {
-                const project = masterProject.projects[i];
-                // Run method to remove task once it is found in project.
-                if (project.tasks.includes(task)) project.removeTask(task);
-            }
-        } else {
-            masterProject.removeTask(task);
+    // If the task doesn't belong to the master project.
+    if (!masterProject.tasks.includes(task)) {
+        // Loop through all the other projects
+        // to find which project needs to remove the task.
+        for (let i = 0; i < masterProject.projects.length; i++) {
+            const project = masterProject.projects[i];
+            // Run method to remove task once it is found in project.
+            if (project.tasks.includes(task)) project.removeTask(task);
         }
-    // Remove task from active project once it is determined it must be
-    // the owner of the task.
-    //activeProject.removeTask(task)
+    } else {
+        masterProject.removeTask(task);
+    }
 });
 
 // Fn to create a new project and emit an event.

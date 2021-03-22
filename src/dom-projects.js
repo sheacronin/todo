@@ -1,4 +1,4 @@
-import {toggleClass} from './helpers';
+import {toggleClass, createElement} from './helpers';
 import {events} from './events';
 
 function updateStyles(project) {
@@ -30,21 +30,39 @@ const projectsList = document.querySelector('#projects-list');
 function addProjectToList(project) {
     console.log(`Adding ${project.name} to list...`);
     // Create project element and add class.
-    const el = document.createElement('div');
-    el.classList.add('project');
-    el.style.backgroundColor = project.color + '80';
-    el.textContent = project.name;
-    
+    const container = createElement('div', '', 'project');
+    container.style.backgroundColor = project.color + '80';
+
+    // Add delete button, as long as not Master Project.
+    if (project.name !== 'All Tasks') {
+        const deleteBtn = createElement('button', 'Delete', 'project-delete');
+        deleteBtn.addEventListener('click', () => removeProjectFromList(container, project));
+        container.appendChild(deleteBtn);
+    }
+
+    const name = createElement('div', project.name, 'project-name');
     // Add event listener to switch project styles & tasks.
-    el.addEventListener('click', () => switchProject(project));
+    name.addEventListener('click', () => switchProject(project));
     // Anoter event listener to hide projects list after a project is clicked.
-    el.addEventListener('click', toggleProjectsList);
+    name.addEventListener('click', toggleProjectsList);
+    container.appendChild(name);
 
     // Append project element to container.
-    projectsList.appendChild(el);
+    projectsList.appendChild(container);
 }
 // Listen for event from projects.js
 events.on('projectCreated', addProjectToList);
+
+function removeProjectFromList(el, project) {
+    console.log(`Removing ${project.name}...`);
+    if (window.confirm(`All tasks will be deleted that belong to this project.
+    Are you sure you want to delete your ${project.name} project?`)) {
+        projectsList.removeChild(el);
+        events.emit('projectRemoved', project);
+    } else {
+        console.log(`No longer removing ${project.name}!`);
+    }
+}
 
 function toggleProjectsList() {
     // Toggle visibility.
