@@ -76,4 +76,4 @@ const switchProjBtn = document.querySelector('#switch-proj');
 // Add event listener to button to show projects list.
 switchProjBtn.addEventListener('click', toggleProjectsList);
 
-export {addProjectToList};
+export {addProjectToList, switchProject};

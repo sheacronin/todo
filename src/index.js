@@ -1,7 +1,7 @@
 import {Task, createTask} from './tasks';
 import {displayAllTasks} from './dom-tasks';
 import {taskForm, projectSelect} from './forms';
-import {addProjectToList} from './dom-projects';
+import {addProjectToList, switchProject} from './dom-projects';
 import {Project, createProject, masterProject} from './projects';
 import {events} from './events';
 
@@ -39,9 +39,10 @@ if (localStorage.getItem('masterproject')) {
     console.log(masterProject);
 }
 
-// Display all projects in list on page load.
+// Display all projects in list on page load, including master project.
+addProjectToList(masterProject);
 masterProject.projects.forEach(project => addProjectToList(project));
 // Switch to master project on page load.
-events.emit('projectSwitched', masterProject);
+switchProject(masterProject);
 
 export {updateLocalStorage};
