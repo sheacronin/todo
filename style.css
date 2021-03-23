@@ -273,6 +273,7 @@ textarea {
     top: 8vh;
     height: 84vh;
     width: 100vw;
+    overflow: scroll;
 }
 
 .project {
@@ -332,4 +333,29 @@ footer {
 #disp-form-btns-container button {
     width: 100%;
     height: 100%;
+}
+
+@media(min-device-width: 500px) {
+    #tasks-container {
+        width: 70vw;
+        margin-left: 30vw;
+    }
+    #projects-list {
+        display: block;
+        width: 30vw;
+    }
+    #switch-proj {
+        display: none;
+    }
+    #disp-form-btns-container {
+        width: 100vw;
+        display: grid;
+        grid-template-columns: 30vw 70vw;
+    }
+    #disp-form-btns-container button {
+        display: block;
+    }
+    .task-details {
+        width: 70vw;
+    }
 }
