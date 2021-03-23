@@ -222,7 +222,7 @@ class TaskDetails extends TaskEl {
             // When button is clicked, toggle delete btn display,
             el.addEventListener('click', () => toggleClass(this.els.deleteBtn.el, 'hidden'));
             // add edit button style/animation,
-            // ----- code here -----
+            el.addEventListener('click', () => toggleClass(el, 'edit-mode'));
             // and make elements editable.
             el.addEventListener('click', () => this.toggleEditMode(task));
             return {el};
@@ -238,6 +238,7 @@ class TaskDetails extends TaskEl {
 
         if (this.isEditable) {
             console.log('Engaging edit mode...');
+            this.els.editBtn.el.textContent = 'Done?';
             // Allow priority circles to be changed.
             this.els.priority.circles.forEach(circle => {
                 circle.addEventListener('click', this.els.priority.styleCircles);
@@ -250,6 +251,7 @@ class TaskDetails extends TaskEl {
             this.els.desc.el.contentEditable = true;
         } else {
             console.log('Stopping edit mode...');
+            this.els.editBtn.el.textContent = 'Edit';
             // Stop priority circles from being able to be changed.
             this.els.priority.circles.forEach(circle => {
                 circle.removeEventListener('click', this.els.priority.styleCircles);
