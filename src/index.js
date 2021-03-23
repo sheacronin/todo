@@ -36,7 +36,6 @@ if (localStorage.getItem('masterproject')) {
         // Store in masterProject object.
         masterProject.projects.push(project);
     });
-    console.log(masterProject);
 }
 
 // Display all projects in list on page load, including master project.

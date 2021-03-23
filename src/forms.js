@@ -80,6 +80,7 @@ const projectSelect = {
     el: document.querySelector('#project-select'),
     // Populate project select element.
     addOption(project) {
+        console.log(`Adding ${project.name} to project selection...`);
         const option = document.createElement('option');
         option.textContent = project.name;
         option.setAttribute('value', project.name);
@@ -98,7 +99,6 @@ const projectSelect = {
         }
     },
     getSelected() {
-        console.log(this.el.value);
         // If master project is selected, return master project obj.
         if (this.el.value === 'All Tasks') return masterProject;
         // If not master project, fn continues to loop thru each project
@@ -113,6 +113,8 @@ const projectSelect = {
         }
     }
 }
+// Add Master Project as an option.
+projectSelect.addOption(masterProject);
 // Bind to projectSelect so 'this' has correct value.
 // Listen for each time project is created to add to selection element.
 events.on('projectCreated', projectSelect.addOption.bind(projectSelect));

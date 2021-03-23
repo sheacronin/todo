@@ -32,7 +32,6 @@ class Task {
 function createTask(args) {
     const task = new Task(...args);
     console.log(`created task ${task.name}`);
-    console.log(task.dueDate);
     events.emit('taskCreated', task);
 }
 

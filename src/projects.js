@@ -10,6 +10,7 @@ class Project {
     }
     // Fn to run when a new task is created.
     addTask(task) {
+        console.log('Adding ' + task.name + ' to ' + this.name);
         this.tasks.push(task);
         events.emit('projectUpdated');
     }
@@ -37,7 +38,6 @@ events.on('projectRemoved', masterProject.deleteProject);
 events.on('taskCreated', (task) => {
     // Store the selected project.
     const selectedProject = projectSelect.getSelected.bind(projectSelect)();
-    console.log(selectedProject);
     selectedProject.addTask(task);
 });
 
