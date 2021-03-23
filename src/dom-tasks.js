@@ -85,7 +85,7 @@ class TaskCard extends TaskEl {
     }
 }
 // Listen for event from tasks.js and dom-projects.js
-events.on('taskCreated', (task) => new TaskCard(task).display());
+events.on('taskAdded', ([task, color]) => new TaskCard(task, color).display());
 
 // Wipe out all tasks when project is switched.
 function removeAllTasks() {

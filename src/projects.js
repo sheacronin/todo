@@ -13,6 +13,7 @@ class Project {
         console.log('Adding ' + task.name + ' to ' + this.name);
         this.tasks.push(task);
         events.emit('projectUpdated');
+        events.emit('taskAdded', [task, this.color]);
     }
     // Fn to run when task is deleted.
     removeTask(task) {
