@@ -5,12 +5,14 @@ import {formatRelative} from 'date-fns';
 
 // Store tasks container div in a vairable.
 const tasksContainer = document.querySelector('#tasks-container');
+const main = document.querySelector('main');
 
 class TaskEl {
     constructor(task, color) {
         this.task = task;
         this.color = color;
         this.container = document.createElement('div'),
+        this.parentEl = tasksContainer;
         this.els = {
             checkbox: (() => {
                 const el = createElement('div', '', 'checkbox');
@@ -61,7 +63,7 @@ class TaskEl {
         // Check if task is complete and add complete styles if so.
         if (this.task.isComplete) this.toggleComplete();
         // Append parent to container.
-        tasksContainer.appendChild(this.container);
+        this.parentEl.appendChild(this.container);
     }
 
     toggleComplete() {
@@ -73,6 +75,7 @@ class TaskEl {
 class TaskCard extends TaskEl {
     constructor(task, color) {
         super(task, color);
+        this.parentEl = tasksContainer;
         this.container.classList.add('task-card');
 
         // Add click listener to display tasks details.
@@ -115,6 +118,7 @@ class TaskDetails extends TaskEl {
     constructor(task, color, card) {
         super(task, color);
         this.card = card;
+        this.parentEl = main;
         this.container.classList.add('task-details');
 
         // Make sure toggling complete affects the task card as well.
@@ -196,7 +200,7 @@ class TaskDetails extends TaskEl {
             const el = createElement('button', '<<', 'details-back');
             if (this.color) el.style.backgroundColor = this.color;
             // When button is clicked, remove details div.
-            el.addEventListener('click', () => tasksContainer.removeChild(this.container));
+            el.addEventListener('click', () => this.parentEl.removeChild(this.container));
             return {el};
         })();
 
@@ -209,7 +213,7 @@ class TaskDetails extends TaskEl {
             el.classList.add('hidden');
             el.addEventListener('click', () => console.log(task));
             // When button is clicked, remove details div,
-            el.addEventListener('click', () => tasksContainer.removeChild(this.container));
+            el.addEventListener('click', () => this.parentEl.removeChild(this.container));
             // remove task card div,
             el.addEventListener('click', () => tasksContainer.removeChild(this.card.container));
             // and emit event to remove task from project.
