@@ -358,4 +358,11 @@ footer {
     .task-details {
         width: 70vw;
     }
+    #project-form {
+        width: 30vw;
+    }
+    #task-form {
+        width: 30vw;
+        margin-left: 70vw;
+    }
 }
