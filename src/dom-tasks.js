@@ -76,7 +76,7 @@ class TaskCard extends TaskEl {
         this.container.classList.add('task-card');
 
         // Add click listener to display tasks details.
-        this.els.name.el.addEventListener('click', () => new TaskDetails(task, this).display());
+        this.els.name.el.addEventListener('click', () => new TaskDetails(task, this.color, this).display());
     }
 
     update(task) {
@@ -112,7 +112,7 @@ function displayAllTasks(project) {
 events.on('projectSwitched', displayAllTasks);
 
 class TaskDetails extends TaskEl {
-    constructor(task, card, color) {
+    constructor(task, color, card) {
         super(task, color);
         this.card = card;
         this.container.classList.add('task-details');
@@ -194,6 +194,7 @@ class TaskDetails extends TaskEl {
         // Add button to hide details.
         this.els.backBtn = (() => {
             const el = createElement('button', '<<', 'details-back');
+            if (this.color) el.style.backgroundColor = this.color;
             // When button is clicked, remove details div.
             el.addEventListener('click', () => tasksContainer.removeChild(this.container));
             return {el};
@@ -219,6 +220,7 @@ class TaskDetails extends TaskEl {
         // Add edit button.
         this.els.editBtn = (() => {
             const el = createElement('button', 'Edit', 'details-edit');
+            if (this.color) el.style.backgroundColor = this.color;
             // When button is clicked, toggle delete btn display,
             el.addEventListener('click', () => toggleClass(this.els.deleteBtn.el, 'hidden'));
             // add edit button style/animation,
