@@ -22,7 +22,7 @@ if (localStorage.getItem('masterproject')) {
     storedMasterProject.tasks.forEach(task => {
         task = new Task(task.name, task.desc, task._dueDate, task.priority, task.isComplete);
         masterProject.tasks.push(task);
-    })
+    });
     // Update page with user's projects
     storedMasterProject.projects.forEach(project => {
         // Reconstruct task objects into new array.

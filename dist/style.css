@@ -14,9 +14,6 @@ body {
 header {
     background-color: var(--proj-color);
     color: white;
-    position: sticky;
-    top: 0;
-    margin: 0;
     height: 8vh;
     display: flex;
     justify-content: center;
@@ -29,6 +26,8 @@ header {
 #tasks-container {
     height: 84vh;
     overflow: scroll;
+    position: relative;
+    width: 100vw;
 }
 
 .task-card {
@@ -74,12 +73,10 @@ header {
 }
 
 .task-details {
-    position: absolute;
-    /* Appear directly below header */
+    position: fixed;
     top: 8vh;
     background-color: #F1F6F9;
-    width: 100vw;
-    /* Full screen minus header & footer */
+    width: 100%;
     height: 84vh;
     display: grid;
     grid-template-columns: 20% 30% 25% 25%;
