@@ -83,7 +83,7 @@ header {
     bottom: 60px;
     background-color: #F1F6F9;
     width: 100%;
-    height: 81%;
+    height: calc(100% - 120px);
     display: grid;
     grid-template-columns: 20% 30% 25% 25%;
     grid-template-rows: 15% 25% 40% 20%;
@@ -228,7 +228,7 @@ form {
     width: 100vw;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     position: fixed;
-    bottom: 8vh;
+    bottom: 60px;
 }
 
 #task-form {
